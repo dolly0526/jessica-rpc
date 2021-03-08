@@ -18,5 +18,4 @@
         <module>simple-rpc-sample-client</module>
         <module>simple-rpc-sample-server</module>
     </modules>
-
 </project>

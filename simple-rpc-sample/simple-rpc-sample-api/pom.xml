@@ -12,5 +12,13 @@
 
     <artifactId>simple-rpc-sample-api</artifactId>
 
-
+    <dependencies>
+        <!-- SIMPLE RPC START -->
+        <dependency>
+            <groupId>com.github.dolly0526</groupId>
+            <artifactId>simple-rpc-common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!-- SIMPLE RPC END -->
+    </dependencies>
 </project>

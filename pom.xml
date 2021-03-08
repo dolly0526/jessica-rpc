@@ -16,7 +16,7 @@
         <module>simple-rpc-sample</module>
         <module>simple-rpc-common</module>
         <module>simple-rpc-core</module>
-        <module>simple-rpc-naming</module>
+        <module>simple-rpc-registry</module>
         <module>simple-rpc-protocol</module>
     </modules>
 

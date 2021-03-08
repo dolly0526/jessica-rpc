@@ -28,12 +28,12 @@
         <!-- SIMPLE RPC START -->
         <dependency>
             <groupId>com.github.dolly0526</groupId>
-            <artifactId>simple-rpc-common</artifactId>
+            <artifactId>simple-rpc-core</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.github.dolly0526</groupId>
-            <artifactId>simple-rpc-core</artifactId>
+            <artifactId>simple-rpc-sample-api</artifactId>
             <version>${project.version}</version>
         </dependency>
         <!-- SIMPLE RPC END -->
