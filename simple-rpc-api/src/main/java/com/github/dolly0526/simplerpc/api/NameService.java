@@ -2,6 +2,7 @@ package com.github.dolly0526.simplerpc.api;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.Collection;
 
 /**
  * 注册中心
@@ -10,6 +11,18 @@ import java.net.URI;
  * @create 2021/3/8 16:32
  */
 public interface NameService {
+
+    /**
+     * 所有支持的协议
+     */
+    Collection<String> supportedSchemes();
+
+    /**
+     * 连接注册中心
+     *
+     * @param nameServiceUri 注册中心地址
+     */
+    void connect(URI nameServiceUri);
 
     /**
      * 注册服务

@@ -1,0 +1,3 @@
+com.github.dolly0526.simplerpc.core.serialize.impl.MetadataSerializer
+com.github.dolly0526.simplerpc.core.serialize.impl.StringSerializer
+com.github.dolly0526.simplerpc.core.serialize.impl.RpcRequestSerializer

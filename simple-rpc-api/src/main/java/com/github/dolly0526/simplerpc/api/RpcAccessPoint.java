@@ -1,7 +1,10 @@
 package com.github.dolly0526.simplerpc.api;
 
+import com.github.dolly0526.simplerpc.api.spi.ServiceSupport;
+
 import java.io.Closeable;
 import java.net.URI;
+import java.util.Collection;
 
 /**
  * RPC框架对外提供的服务接口
@@ -30,6 +33,23 @@ public interface RpcAccessPoint extends Closeable {
      * @return 服务地址
      */
     <T> URI addServiceProvider(T service, Class<T> serviceClass);
+
+    /**
+     * 获取注册中心的引用
+     *
+     * @param nameServiceUri 注册中心URI
+     * @return 注册中心引用
+     */
+    default NameService getNameService(URI nameServiceUri) {
+        Collection<NameService> nameServices = ServiceSupport.loadAll(NameService.class);
+        for (NameService nameService : nameServices) {
+            if (nameService.supportedSchemes().contains(nameServiceUri.getScheme())) {
+                nameService.connect(nameServiceUri);
+                return nameService;
+            }
+        }
+        return null;
+    }
 
     /**
      * 服务端启动RPC框架，监听接口，开始提供远程服务。
