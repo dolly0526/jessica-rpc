@@ -6,7 +6,7 @@
 
     <groupId>com.github.dolly0526</groupId>
     <artifactId>simple-rpc</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
 
     <name>simple-rpc</name>
     <description>A simple RPC framework based on Netty, Protobuf, SpringBoot And ZooKeeper</description>
