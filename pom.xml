@@ -25,6 +25,7 @@
         <spring.boot.version>2.3.9.RELEASE</spring.boot.version>
         <netty.version>4.1.39.Final</netty.version>
         <fastjson.version>1.2.75</fastjson.version>
+        <com.itranswarp.compiler.version>1.0</com.itranswarp.compiler.version>
         <curator.version>4.2.0</curator.version>
         <zookeeper.version>3.4.5</zookeeper.version>
         <hutool.version>5.5.9</hutool.version>
@@ -46,6 +47,11 @@
                 <version>${netty.version}</version>
             </dependency>
             <dependency>
+                <groupId>com.itranswarp</groupId>
+                <artifactId>compiler</artifactId>
+                <version>${com.itranswarp.compiler.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.apache.curator</groupId>
                 <artifactId>curator-recipes</artifactId>
                 <version>${curator.version}</version>
@@ -60,6 +66,11 @@
                 <groupId>org.apache.zookeeper</groupId>
                 <artifactId>zookeeper</artifactId>
                 <version>${zookeeper.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
             </dependency>
             <dependency>
                 <groupId>cn.hutool</groupId>

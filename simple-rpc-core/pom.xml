@@ -32,9 +32,13 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>${fastjson.version}</version>
         </dependency>
         <!-- FASTJSON END -->
+
+        <dependency>
+            <groupId>com.itranswarp</groupId>
+            <artifactId>compiler</artifactId>
+        </dependency>
 
         <!-- SIMPLE RPC START -->
         <dependency>
