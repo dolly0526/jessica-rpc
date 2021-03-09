@@ -10,45 +10,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>simple-rpc-core</artifactId>
-
-    <dependencies>
-        <!-- SPRING FRAMEWORK START -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <!-- SPRING FRAMEWORK END -->
-
-        <!-- NETTY START -->
-        <dependency>
-            <groupId>io.netty</groupId>
-            <artifactId>netty-all</artifactId>
-        </dependency>
-        <!-- NETTY END -->
-
-        <!-- FASTJSON START -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>${fastjson.version}</version>
-        </dependency>
-        <!-- FASTJSON END -->
-
-        <!-- SIMPLE RPC START -->
-        <dependency>
-            <groupId>com.github.dolly0526</groupId>
-            <artifactId>simple-rpc-common</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.dolly0526</groupId>
-            <artifactId>simple-rpc-api</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <!-- SIMPLE RPC END -->
-    </dependencies>
+    <artifactId>simple-rpc-api</artifactId>
 
     <build>
         <resources>

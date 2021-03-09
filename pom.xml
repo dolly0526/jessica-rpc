@@ -16,8 +16,7 @@
         <module>simple-rpc-sample</module>
         <module>simple-rpc-common</module>
         <module>simple-rpc-core</module>
-        <module>simple-rpc-registry</module>
-        <module>simple-rpc-protocol</module>
+        <module>simple-rpc-api</module>
     </modules>
 
     <properties>
@@ -25,6 +24,7 @@
         <java.encoding>UTF-8</java.encoding>
         <spring.boot.version>2.3.9.RELEASE</spring.boot.version>
         <netty.version>4.1.39.Final</netty.version>
+        <fastjson.version>1.2.75</fastjson.version>
         <curator.version>4.2.0</curator.version>
         <zookeeper.version>3.4.5</zookeeper.version>
         <hutool.version>5.5.9</hutool.version>
@@ -88,6 +88,45 @@
                             </exclude>
                         </excludes>
                     </configuration>
+                </plugin>
+                <!-- 打包源代码 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>3.0.0</version>
+                    <configuration>
+                        <attach>false</attach>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <phase>compile</phase>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- 编译源代码 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.1</version>
+                    <configuration>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                        <encoding>${java.encoding}</encoding>
+                        <compilerArgument>-Xlint:unchecked</compilerArgument>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.1.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>3.0.0</version>
                 </plugin>
             </plugins>
         </pluginManagement>
