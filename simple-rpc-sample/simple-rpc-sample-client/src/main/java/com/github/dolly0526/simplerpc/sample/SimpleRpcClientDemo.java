@@ -24,13 +24,17 @@ public class SimpleRpcClientDemo {
         String name = "Master MQ";
 
         try (RpcAccessPoint rpcAccessPoint = ServiceSupport.load(RpcAccessPoint.class)) {
+
             NameService nameService = rpcAccessPoint.getNameService(file.toURI());
             assert nameService != null;
+
             URI uri = nameService.lookupService(serviceName);
             assert uri != null;
             log.info("找到服务{}，提供者: {}.", serviceName, uri);
+
             HelloService helloService = rpcAccessPoint.getRemoteService(uri, HelloService.class);
             log.info("请求服务, name: {}...", name);
+
             String response = helloService.hello(name);
             log.info("收到响应: {}.", response);
         }

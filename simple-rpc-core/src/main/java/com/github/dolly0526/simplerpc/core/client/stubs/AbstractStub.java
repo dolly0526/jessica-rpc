@@ -5,10 +5,10 @@ import com.github.dolly0526.simplerpc.core.client.ServiceStub;
 import com.github.dolly0526.simplerpc.core.client.ServiceTypes;
 import com.github.dolly0526.simplerpc.core.serialize.SerializeSupport;
 import com.github.dolly0526.simplerpc.core.transport.Transport;
-import com.github.dolly0526.simplerpc.core.transport.command.Code;
-import com.github.dolly0526.simplerpc.core.transport.command.Command;
-import com.github.dolly0526.simplerpc.core.transport.command.Header;
-import com.github.dolly0526.simplerpc.core.transport.command.ResponseHeader;
+import com.github.dolly0526.simplerpc.core.transport.protocol.Code;
+import com.github.dolly0526.simplerpc.core.transport.protocol.Command;
+import com.github.dolly0526.simplerpc.core.transport.protocol.Header;
+import com.github.dolly0526.simplerpc.core.transport.protocol.ResponseHeader;
 
 import java.util.concurrent.ExecutionException;
 
@@ -22,15 +22,19 @@ public abstract class AbstractStub implements ServiceStub {
     protected Transport transport;
 
 
-    protected byte [] invokeRemote(RpcRequest request) {
+    protected byte[] invokeRemote(RpcRequest request) {
+
         Header header = new Header(ServiceTypes.TYPE_RPC_REQUEST, 1, RequestIdSupport.next());
-        byte [] payload = SerializeSupport.serialize(request);
+        byte[] payload = SerializeSupport.serialize(request);
         Command requestCommand = new Command(header, payload);
+
         try {
             Command responseCommand = transport.send(requestCommand).get();
             ResponseHeader responseHeader = (ResponseHeader) responseCommand.getHeader();
-            if(responseHeader.getCode() == Code.SUCCESS.getCode()) {
+
+            if (responseHeader.getCode() == Code.SUCCESS.getCode()) {
                 return responseCommand.getPayload();
+
             } else {
                 throw new Exception(responseHeader.getError());
             }

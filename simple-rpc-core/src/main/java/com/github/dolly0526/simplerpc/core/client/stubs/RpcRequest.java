@@ -11,8 +11,13 @@ import lombok.Getter;
 @Getter
 public class RpcRequest {
 
+    // 接口全类名
     private final String interfaceName;
+
+    // 方法名
     private final String methodName;
+
+    // 序列化后的参数
     private final byte[] serializedArguments;
 
 

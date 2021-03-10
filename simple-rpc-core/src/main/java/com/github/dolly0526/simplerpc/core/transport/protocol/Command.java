@@ -1,11 +1,11 @@
-package com.github.dolly0526.simplerpc.core.transport.command;
+package com.github.dolly0526.simplerpc.core.transport.protocol;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * 封装请求和响应数据
+ * 自定义协议，封装请求和响应数据
  *
  * @author yusenyang
  * @create 2021/3/8 18:36
@@ -19,5 +19,5 @@ public class Command {
     protected Header header;
 
     // 消息内容
-    private byte [] payload;
+    private byte[] payload;
 }

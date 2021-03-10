@@ -1,6 +1,6 @@
 package com.github.dolly0526.simplerpc.core.transport.netty;
 
-import com.github.dolly0526.simplerpc.core.transport.RequestHandlerRegistry;
+import com.github.dolly0526.simplerpc.core.server.RequestHandlerRegistry;
 import com.github.dolly0526.simplerpc.core.transport.TransportServer;
 import com.github.dolly0526.simplerpc.core.transport.netty.codec.RequestDecoder;
 import com.github.dolly0526.simplerpc.core.transport.netty.codec.ResponseEncoder;

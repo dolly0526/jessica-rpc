@@ -1,6 +1,6 @@
 package com.github.dolly0526.simplerpc.core.transport.netty;
 
-import com.github.dolly0526.simplerpc.core.transport.InFlightRequests;
+import com.github.dolly0526.simplerpc.core.client.response.InFlightRequests;
 import com.github.dolly0526.simplerpc.core.transport.Transport;
 import com.github.dolly0526.simplerpc.core.transport.TransportClient;
 import com.github.dolly0526.simplerpc.core.transport.netty.codec.RequestEncoder;

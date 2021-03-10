@@ -1,6 +1,6 @@
-package com.github.dolly0526.simplerpc.core.transport;
+package com.github.dolly0526.simplerpc.core.client.response;
 
-import com.github.dolly0526.simplerpc.core.transport.command.Command;
+import com.github.dolly0526.simplerpc.core.transport.protocol.Command;
 
 import java.util.concurrent.CompletableFuture;
 

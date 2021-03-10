@@ -1,9 +1,9 @@
 package com.github.dolly0526.simplerpc.core.transport.netty;
 
-import com.github.dolly0526.simplerpc.core.transport.InFlightRequests;
+import com.github.dolly0526.simplerpc.core.client.response.InFlightRequests;
 import com.github.dolly0526.simplerpc.core.transport.Transport;
-import com.github.dolly0526.simplerpc.core.transport.command.Command;
-import com.github.dolly0526.simplerpc.core.transport.ResponseFuture;
+import com.github.dolly0526.simplerpc.core.transport.protocol.Command;
+import com.github.dolly0526.simplerpc.core.client.response.ResponseFuture;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFutureListener;
 

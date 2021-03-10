@@ -35,10 +35,23 @@
         </dependency>
         <!-- FASTJSON END -->
 
+        <!-- CURATOR START -->
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-recipes</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.zookeeper</groupId>
+            <artifactId>zookeeper</artifactId>
+        </dependency>
+        <!-- CURATOR END -->
+
+        <!-- COMPILER START -->
         <dependency>
             <groupId>com.itranswarp</groupId>
             <artifactId>compiler</artifactId>
         </dependency>
+        <!-- COMPILER END -->
 
         <!-- SIMPLE RPC START -->
         <dependency>

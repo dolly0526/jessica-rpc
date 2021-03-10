@@ -1,4 +1,4 @@
-package com.github.dolly0526.simplerpc.core.transport;
+package com.github.dolly0526.simplerpc.core.client.response;
 
 import java.io.Closeable;
 import java.util.Map;

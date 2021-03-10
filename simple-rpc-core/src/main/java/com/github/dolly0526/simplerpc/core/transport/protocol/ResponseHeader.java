@@ -1,10 +1,10 @@
-package com.github.dolly0526.simplerpc.core.transport.command;
+package com.github.dolly0526.simplerpc.core.transport.protocol;
 
 import com.github.dolly0526.simplerpc.common.constant.SimpleRpcConst;
 import lombok.*;
 
 /**
- * 返回的响应Header
+ * 自定义协议，返回的响应头部
  *
  * @author yusenyang
  * @create 2021/3/8 18:41

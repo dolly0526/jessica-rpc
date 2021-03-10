@@ -1,8 +1,8 @@
 package com.github.dolly0526.simplerpc.core.transport.netty.handler;
 
-import com.github.dolly0526.simplerpc.core.transport.RequestHandler;
-import com.github.dolly0526.simplerpc.core.transport.RequestHandlerRegistry;
-import com.github.dolly0526.simplerpc.core.transport.command.Command;
+import com.github.dolly0526.simplerpc.core.server.RequestHandler;
+import com.github.dolly0526.simplerpc.core.server.RequestHandlerRegistry;
+import com.github.dolly0526.simplerpc.core.transport.protocol.Command;
 import io.netty.channel.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

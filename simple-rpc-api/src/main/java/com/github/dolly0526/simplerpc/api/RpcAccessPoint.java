@@ -42,12 +42,14 @@ public interface RpcAccessPoint extends Closeable {
      */
     default NameService getNameService(URI nameServiceUri) {
         Collection<NameService> nameServices = ServiceSupport.loadAll(NameService.class);
+
         for (NameService nameService : nameServices) {
             if (nameService.supportedSchemes().contains(nameServiceUri.getScheme())) {
                 nameService.connect(nameServiceUri);
                 return nameService;
             }
         }
+
         return null;
     }
 

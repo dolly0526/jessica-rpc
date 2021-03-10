@@ -1,4 +1,4 @@
-package com.github.dolly0526.simplerpc.core.transport.command;
+package com.github.dolly0526.simplerpc.core.transport.protocol;
 
 import java.util.HashMap;
 import java.util.Map;

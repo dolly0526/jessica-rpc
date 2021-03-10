@@ -1,7 +1,7 @@
 package com.github.dolly0526.simplerpc.core.transport.netty.codec;
 
-import com.github.dolly0526.simplerpc.core.transport.command.Command;
-import com.github.dolly0526.simplerpc.core.transport.command.Header;
+import com.github.dolly0526.simplerpc.core.transport.protocol.Command;
+import com.github.dolly0526.simplerpc.core.transport.protocol.Header;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;

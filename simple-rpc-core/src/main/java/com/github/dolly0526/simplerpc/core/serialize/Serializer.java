@@ -17,7 +17,7 @@ public interface Serializer<T> {
     int size(T entry);
 
     /**
-     * 序列化对象。将给定的对象序列化成字节数组
+     * 序列化对象，将给定的对象序列化成字节数组
      *
      * @param entry  待序列化的对象
      * @param bytes  存放序列化数据的字节数组

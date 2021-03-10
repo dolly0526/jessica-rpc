@@ -1,11 +1,11 @@
-package com.github.dolly0526.simplerpc.core.transport.command;
+package com.github.dolly0526.simplerpc.core.transport.protocol;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * 请求头部
+ * 自定义协议，通用请求头部
  *
  * @author yusenyang
  * @create 2021/3/8 18:37

@@ -26,14 +26,18 @@ public class SimpleRpcServerDemo {
 
         try (RpcAccessPoint rpcAccessPoint = ServiceSupport.load(RpcAccessPoint.class);
              Closeable ignored = rpcAccessPoint.startServer()) {
+
             NameService nameService = rpcAccessPoint.getNameService(file.toURI());
             assert nameService != null;
             log.info("向RpcAccessPoint注册{}服务...", serviceName);
+
             URI uri = rpcAccessPoint.addServiceProvider(helloService, HelloService.class);
             log.info("服务名: {}, 向NameService注册...", serviceName);
+
             nameService.registerService(serviceName, uri);
             log.info("开始提供服务，按任何键退出.");
-            //noinspection ResultOfMethodCallIgnored
+
+            // noinspection ResultOfMethodCallIgnored
             System.in.read();
             log.info("Bye!");
         }
