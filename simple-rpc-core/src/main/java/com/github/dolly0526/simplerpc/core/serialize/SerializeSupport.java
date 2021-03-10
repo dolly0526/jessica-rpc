@@ -38,24 +38,6 @@ public class SerializeSupport {
 
 
     /**
-     * 已经把type头摘掉之后，和serializerMap交互，进行反序列化
-     */
-    @SuppressWarnings("unchecked")
-    private static <E> E parse(byte[] buffer, int offset, int length, Class<E> eClass) {
-
-        // 利用SPI，根据类型获取Serializer对象，调用Serializer的parse方法反序列化
-        Object entry = serializerMap.get(eClass).parse(buffer, offset, length);
-
-        // 返回前还需注意判断类型是否合理
-        if (eClass.isAssignableFrom(entry.getClass())) {
-            return (E) entry;
-
-        } else {
-            throw new SerializeException("Type mismatch!");
-        }
-    }
-
-    /**
      * 拿到一个byte流，直接从0处理到末尾
      */
     public static <E> E parse(byte[] bytes) {
@@ -80,6 +62,24 @@ public class SerializeSupport {
 
         } else {
             throw new SerializeException(String.format("Unknown entry type: %d!", type));
+        }
+    }
+
+    /**
+     * 已经把type头摘掉之后，和serializerMap交互，进行反序列化
+     */
+    @SuppressWarnings("unchecked")
+    private static <E> E parse(byte[] buffer, int offset, int length, Class<E> eClass) {
+
+        // 利用SPI，根据类型获取Serializer对象，调用Serializer的parse方法反序列化
+        Object entry = serializerMap.get(eClass).parse(buffer, offset, length);
+
+        // 返回前还需注意判断类型是否合理
+        if (eClass.isAssignableFrom(entry.getClass())) {
+            return (E) entry;
+
+        } else {
+            throw new SerializeException("Type mismatch!");
         }
     }
 
