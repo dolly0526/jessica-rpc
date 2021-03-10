@@ -5,18 +5,18 @@
     <packaging>pom</packaging>
 
     <groupId>com.github.dolly0526</groupId>
-    <artifactId>simple-rpc</artifactId>
+    <artifactId>jessica-rpc</artifactId>
     <version>1.1-SNAPSHOT</version>
 
-    <name>simple-rpc</name>
-    <description>A simple RPC framework based on Netty</description>
+    <name>jessica-rpc</name>
+    <description>An RPC framework based on Netty</description>
     <inceptionYear>SINCE 2021/03/01</inceptionYear>
 
     <modules>
-        <module>simple-rpc-sample</module>
-        <module>simple-rpc-common</module>
-        <module>simple-rpc-core</module>
-        <module>simple-rpc-api</module>
+        <module>jessica-rpc-sample</module>
+        <module>jessica-rpc-common</module>
+        <module>jessica-rpc-core</module>
+        <module>jessica-rpc-api</module>
     </modules>
 
     <properties>
