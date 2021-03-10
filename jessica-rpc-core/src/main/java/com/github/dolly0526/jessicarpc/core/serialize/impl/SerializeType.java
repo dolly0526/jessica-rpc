@@ -9,6 +9,8 @@ package com.github.dolly0526.jessicarpc.core.serialize.impl;
 public interface SerializeType {
 
     int TYPE_STRING = 0;
+    int TYPE_OBJECT_ARRAY = 1;
+    int TYPE_OBJECT = 2;
     int TYPE_METADATA = 100;
     int TYPE_RPC_REQUEST = 101;
 }

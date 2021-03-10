@@ -71,8 +71,8 @@ public class SerializeSupport {
     @SuppressWarnings("unchecked")
     private static <E> E parse(byte[] buffer, int offset, int length, Class<E> eClass) {
 
-        // 利用SPI，根据类型获取Serializer对象，调用Serializer的parse方法反序列化
-        Object entry = serializerMap.get(eClass).parse(buffer, offset, length);
+        // 利用SPI，根据类型获取Serializer对象，调用Serializer的parse方法反序列化，默认使用Object的序列化
+        Object entry = serializerMap.getOrDefault(eClass, serializerMap.get(Object.class)).parse(buffer, offset, length);
 
         // 返回前还需注意判断类型是否合理
         if (eClass.isAssignableFrom(entry.getClass())) {
@@ -88,9 +88,12 @@ public class SerializeSupport {
      */
     @SuppressWarnings("unchecked")
     public static <E> byte[] serialize(E entry) {
+        if (entry == null) {
+            return null;
+        }
 
-        // 根据类型获取对应的Serializer
-        Serializer<E> serializer = (Serializer<E>) serializerMap.get(entry.getClass());
+        // 根据类型获取对应的Serializer，默认使用Object的序列化
+        Serializer<E> serializer = (Serializer<E>) serializerMap.getOrDefault(entry.getClass(), serializerMap.get(Object.class));
 
         if (serializer == null) {
             throw new SerializeException(String.format("Unknown entry class type: %s", entry.getClass().toString()));

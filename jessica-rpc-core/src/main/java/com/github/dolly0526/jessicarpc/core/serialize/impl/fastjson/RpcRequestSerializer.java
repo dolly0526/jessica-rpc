@@ -1,12 +1,15 @@
-package com.github.dolly0526.jessicarpc.core.serialize.impl;
+package com.github.dolly0526.jessicarpc.core.serialize.impl.fastjson;
 
 import com.alibaba.fastjson.JSON;
 import com.github.dolly0526.jessicarpc.core.client.stubs.RpcRequest;
 import com.github.dolly0526.jessicarpc.common.constant.JessicaRpcConst;
+import com.github.dolly0526.jessicarpc.core.serialize.impl.SerializeType;
 
 import java.nio.ByteBuffer;
 
 /**
+ * 用于对最终的rpc请求的序列化
+ *
  * @author yusenyang
  * @create 2021/3/9 19:19
  */
