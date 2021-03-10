@@ -3,12 +3,13 @@ package com.github.dolly0526.jessicarpc.core.client.stubs;
 import com.github.dolly0526.jessicarpc.core.client.ServiceTypes;
 import com.github.dolly0526.jessicarpc.core.client.RequestIdSupport;
 import com.github.dolly0526.jessicarpc.core.client.ServiceStub;
-import com.github.dolly0526.jessicarpc.core.serialize.SerializeSupport;
+import com.github.dolly0526.jessicarpc.serializer.SerializeSupport;
 import com.github.dolly0526.jessicarpc.core.transport.Transport;
 import com.github.dolly0526.jessicarpc.core.transport.protocol.Code;
 import com.github.dolly0526.jessicarpc.core.transport.protocol.Command;
 import com.github.dolly0526.jessicarpc.core.transport.protocol.Header;
 import com.github.dolly0526.jessicarpc.core.transport.protocol.ResponseHeader;
+import com.github.dolly0526.jessicarpc.common.model.RpcRequest;
 
 import java.util.concurrent.ExecutionException;
 

@@ -10,22 +10,22 @@
         <version>1.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>jessica-rpc-core</artifactId>
+    <artifactId>jessica-rpc-serializer</artifactId>
 
     <dependencies>
-        <!-- NETTY START -->
+        <!-- FASTJSON START -->
         <dependency>
-            <groupId>io.netty</groupId>
-            <artifactId>netty-all</artifactId>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
         </dependency>
-        <!-- NETTY END -->
+        <!-- FASTJSON END -->
 
-        <!-- COMPILER START -->
+        <!-- FASTJSON START -->
         <dependency>
-            <groupId>com.itranswarp</groupId>
-            <artifactId>compiler</artifactId>
+            <groupId>com.caucho</groupId>
+            <artifactId>hessian</artifactId>
         </dependency>
-        <!-- COMPILER END -->
+        <!-- FASTJSON END -->
 
         <!-- JESSICA RPC START -->
         <dependency>
@@ -36,11 +36,6 @@
         <dependency>
             <groupId>com.github.dolly0526</groupId>
             <artifactId>jessica-rpc-api</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.dolly0526</groupId>
-            <artifactId>jessica-rpc-nameservice</artifactId>
             <version>${project.version}</version>
         </dependency>
         <!-- JESSICA RPC END -->

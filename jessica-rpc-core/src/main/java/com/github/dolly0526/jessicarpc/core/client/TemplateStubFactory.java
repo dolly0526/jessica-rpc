@@ -13,8 +13,9 @@ import java.util.Map;
  */
 public class TemplateStubFactory implements StubFactory {
     private final static String STUB_SOURCE_TEMPLATE =
-            "package com.github.dolly0526.simplerpc.core.client.stubs;\n" +
-            "import com.github.dolly0526.simplerpc.core.serialize.SerializeSupport;\n" +
+            "package com.github.dolly0526.jessicarpc.core.client.stubs;\n" +
+            "import com.github.dolly0526.jessicarpc.common.model.RpcRequest;\n" +
+            "import com.github.dolly0526.jessicarpc.serializer.SerializeSupport;\n" +
             "\n" +
             "public class %s extends AbstractStub implements %s {\n" +
             "    @Override\n" +
@@ -40,7 +41,7 @@ public class TemplateStubFactory implements StubFactory {
             // 填充模板
             String stubSimpleName = serviceClass.getSimpleName() + "Stub";
             String classFullName = serviceClass.getName();
-            String stubFullName = "com.github.dolly0526.simplerpc.core.client.stubs." + stubSimpleName;
+            String stubFullName = "com.github.dolly0526.jessicarpc.core.client.stubs." + stubSimpleName;
             String methodName = serviceClass.getMethods()[0].getName();
 
             String source = String.format(STUB_SOURCE_TEMPLATE, stubSimpleName, classFullName, methodName, classFullName, methodName);

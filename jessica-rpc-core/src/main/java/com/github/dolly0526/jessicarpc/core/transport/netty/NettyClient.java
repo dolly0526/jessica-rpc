@@ -2,7 +2,7 @@ package com.github.dolly0526.jessicarpc.core.transport.netty;
 
 import com.github.dolly0526.jessicarpc.core.transport.Transport;
 import com.github.dolly0526.jessicarpc.core.transport.TransportClient;
-import com.github.dolly0526.jessicarpc.core.transport.dispatcher.RequestPendingCenter;
+import com.github.dolly0526.jessicarpc.core.client.dispatcher.ResponsePendingCenter;
 import com.github.dolly0526.jessicarpc.core.transport.netty.codec.RequestEncoder;
 import com.github.dolly0526.jessicarpc.core.transport.netty.codec.ResponseDecoder;
 import com.github.dolly0526.jessicarpc.core.transport.netty.handler.ResponseInvocation;
@@ -27,12 +27,12 @@ import java.util.concurrent.TimeoutException;
 public class NettyClient implements TransportClient {
     private EventLoopGroup ioEventGroup;
     private Bootstrap bootstrap;
-    private final RequestPendingCenter requestPendingCenter;
+    private final ResponsePendingCenter responsePendingCenter;
     private List<Channel> channels = new LinkedList<>();
 
 
     public NettyClient() {
-        requestPendingCenter = new RequestPendingCenter();
+        responsePendingCenter = new ResponsePendingCenter();
     }
 
 
@@ -47,7 +47,7 @@ public class NettyClient implements TransportClient {
 
     @Override
     public Transport createTransport(SocketAddress address, long connectionTimeout) throws InterruptedException, TimeoutException {
-        return new NettyTransport(createChannel(address, connectionTimeout), requestPendingCenter);
+        return new NettyTransport(createChannel(address, connectionTimeout), responsePendingCenter);
     }
 
     private synchronized Channel createChannel(SocketAddress address, long connectionTimeout) throws InterruptedException, TimeoutException {
@@ -82,7 +82,7 @@ public class NettyClient implements TransportClient {
                 channel.pipeline()
                         .addLast(new ResponseDecoder())
                         .addLast(new RequestEncoder())
-                        .addLast(new ResponseInvocation(requestPendingCenter));
+                        .addLast(new ResponseInvocation(responsePendingCenter));
             }
         };
     }
@@ -106,6 +106,6 @@ public class NettyClient implements TransportClient {
         if (ioEventGroup != null) {
             ioEventGroup.shutdownGracefully();
         }
-        requestPendingCenter.close();
+        responsePendingCenter.close();
     }
 }

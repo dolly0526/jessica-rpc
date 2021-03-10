@@ -10,22 +10,26 @@
         <version>1.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>jessica-rpc-core</artifactId>
+    <artifactId>jessica-rpc-nameservice</artifactId>
 
     <dependencies>
-        <!-- NETTY START -->
+        <!-- CURATOR START -->
         <dependency>
-            <groupId>io.netty</groupId>
-            <artifactId>netty-all</artifactId>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-recipes</artifactId>
         </dependency>
-        <!-- NETTY END -->
+        <dependency>
+            <groupId>org.apache.zookeeper</groupId>
+            <artifactId>zookeeper</artifactId>
+        </dependency>
+        <!-- CURATOR END -->
 
-        <!-- COMPILER START -->
+        <!-- MYSQL START -->
         <dependency>
-            <groupId>com.itranswarp</groupId>
-            <artifactId>compiler</artifactId>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
         </dependency>
-        <!-- COMPILER END -->
+        <!-- MYSQL END -->
 
         <!-- JESSICA RPC START -->
         <dependency>
@@ -40,7 +44,7 @@
         </dependency>
         <dependency>
             <groupId>com.github.dolly0526</groupId>
-            <artifactId>jessica-rpc-nameservice</artifactId>
+            <artifactId>jessica-rpc-serializer</artifactId>
             <version>${project.version}</version>
         </dependency>
         <!-- JESSICA RPC END -->

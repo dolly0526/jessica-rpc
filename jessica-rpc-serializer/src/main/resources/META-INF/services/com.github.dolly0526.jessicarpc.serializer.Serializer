@@ -1,0 +1,5 @@
+com.github.dolly0526.jessicarpc.serializer.impl.StringSerializer
+com.github.dolly0526.jessicarpc.serializer.impl.MetadataSerializer
+com.github.dolly0526.jessicarpc.serializer.impl.RpcRequestSerializer
+com.github.dolly0526.jessicarpc.serializer.impl.fastjson.ObjectSerializer
+com.github.dolly0526.jessicarpc.serializer.impl.fastjson.ObjectArraysSerializer

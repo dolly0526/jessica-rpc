@@ -17,6 +17,8 @@
         <module>jessica-rpc-common</module>
         <module>jessica-rpc-core</module>
         <module>jessica-rpc-api</module>
+        <module>jessica-rpc-serializer</module>
+        <module>jessica-rpc-nameservice</module>
     </modules>
 
     <properties>
@@ -25,9 +27,10 @@
         <spring.boot.version>2.3.9.RELEASE</spring.boot.version>
         <netty.version>4.1.39.Final</netty.version>
         <fastjson.version>1.2.75</fastjson.version>
+        <hessian.version>4.0.38</hessian.version>
         <com.itranswarp.compiler.version>1.0</com.itranswarp.compiler.version>
         <curator.version>4.2.0</curator.version>
-        <zookeeper.version>3.4.5</zookeeper.version>
+        <zookeeper.version>3.4.6</zookeeper.version>
         <hutool.version>5.5.9</hutool.version>
         <javatuples.version>1.2</javatuples.version>
     </properties>
@@ -71,6 +74,11 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.caucho</groupId>
+                <artifactId>hessian</artifactId>
+                <version>${hessian.version}</version>
             </dependency>
             <dependency>
                 <groupId>cn.hutool</groupId>

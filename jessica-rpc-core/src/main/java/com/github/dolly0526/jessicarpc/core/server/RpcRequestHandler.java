@@ -1,9 +1,9 @@
 package com.github.dolly0526.jessicarpc.core.server;
 
 import com.github.dolly0526.jessicarpc.core.client.ServiceTypes;
-import com.github.dolly0526.jessicarpc.core.client.stubs.RpcRequest;
+import com.github.dolly0526.jessicarpc.common.model.RpcRequest;
 import com.github.dolly0526.jessicarpc.api.spi.Singleton;
-import com.github.dolly0526.jessicarpc.core.serialize.SerializeSupport;
+import com.github.dolly0526.jessicarpc.serializer.SerializeSupport;
 import com.github.dolly0526.jessicarpc.core.transport.protocol.Code;
 import com.github.dolly0526.jessicarpc.core.transport.protocol.Command;
 import com.github.dolly0526.jessicarpc.core.transport.protocol.Header;

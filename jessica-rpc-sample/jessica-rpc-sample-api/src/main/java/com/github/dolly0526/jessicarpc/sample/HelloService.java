@@ -7,4 +7,8 @@ package com.github.dolly0526.jessicarpc.sample;
 public interface HelloService {
 
     String hello(String name);
+
+//    HelloResult helloMoreResult(String name,String value);
+//
+//    HelloResult helloMoreResult(HelloRequest request);
 }

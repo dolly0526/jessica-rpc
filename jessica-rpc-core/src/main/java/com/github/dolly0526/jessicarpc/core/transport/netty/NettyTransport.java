@@ -1,8 +1,8 @@
 package com.github.dolly0526.jessicarpc.core.transport.netty;
 
 import com.github.dolly0526.jessicarpc.core.transport.Transport;
-import com.github.dolly0526.jessicarpc.core.transport.dispatcher.RequestPendingCenter;
-import com.github.dolly0526.jessicarpc.core.transport.dispatcher.ResponseFuture;
+import com.github.dolly0526.jessicarpc.core.client.dispatcher.ResponsePendingCenter;
+import com.github.dolly0526.jessicarpc.core.client.dispatcher.ResponseFuture;
 import com.github.dolly0526.jessicarpc.core.transport.protocol.Command;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFutureListener;
@@ -21,12 +21,12 @@ public class NettyTransport implements Transport {
     private final Channel channel;
 
     // 存放所有还没返回结果的请求，每个客户端持有一个
-    private final RequestPendingCenter requestPendingCenter;
+    private final ResponsePendingCenter responsePendingCenter;
 
 
-    public NettyTransport(Channel channel, RequestPendingCenter requestPendingCenter) {
+    public NettyTransport(Channel channel, ResponsePendingCenter responsePendingCenter) {
         this.channel = channel;
-        this.requestPendingCenter = requestPendingCenter;
+        this.responsePendingCenter = responsePendingCenter;
     }
 
 
@@ -42,7 +42,7 @@ public class NettyTransport implements Transport {
         // 此处处理异常必须尽量完善！
         try {
             // 将在途请求放到requestPendingCenter中
-            requestPendingCenter.put(new ResponseFuture(requestId, completableFuture));
+            responsePendingCenter.put(new ResponseFuture(requestId, completableFuture));
 
             // 发送命令并且立即写出，同时需要添加一个监听器来监控该次请求是否报错
             channel.writeAndFlush(request)
@@ -57,7 +57,7 @@ public class NettyTransport implements Transport {
         } catch (Throwable t) {
 
             // 处理发送异常
-            requestPendingCenter.remove(requestId);
+            responsePendingCenter.remove(requestId);
             completableFuture.completeExceptionally(t);
         }
 

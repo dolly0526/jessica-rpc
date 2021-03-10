@@ -3,6 +3,7 @@ package com.github.dolly0526.jessicarpc.sample;
 import com.github.dolly0526.jessicarpc.api.NameService;
 import com.github.dolly0526.jessicarpc.api.RpcAccessPoint;
 import com.github.dolly0526.jessicarpc.api.spi.ServiceSupport;
+import com.github.dolly0526.jessicarpc.sample.impl.HelloServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.Closeable;
@@ -20,7 +21,7 @@ public class SimpleRpcServerDemo {
 
         String serviceName = HelloService.class.getCanonicalName();
         File tmpDirFile = new File(System.getProperty("java.io.tmpdir"));
-        File file = new File(tmpDirFile, "simple_rpc_name_service.data");
+        File file = new File(tmpDirFile, "jessica_rpc_name_service.data");
         HelloService helloService = new HelloServiceImpl();
         log.info("创建并启动RpcAccessPoint...");
 

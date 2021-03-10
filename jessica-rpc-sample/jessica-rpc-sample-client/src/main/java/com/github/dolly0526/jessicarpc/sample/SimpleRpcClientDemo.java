@@ -20,7 +20,7 @@ public class SimpleRpcClientDemo {
 
         String serviceName = HelloService.class.getCanonicalName();
         File tmpDirFile = new File(System.getProperty("java.io.tmpdir"));
-        File file = new File(tmpDirFile, "simple_rpc_name_service.data");
+        File file = new File(tmpDirFile, "jessica_rpc_name_service.data");
         String name = "Master MQ";
 
         try (RpcAccessPoint rpcAccessPoint = ServiceSupport.load(RpcAccessPoint.class)) {

@@ -4,16 +4,17 @@ import com.github.dolly0526.jessicarpc.core.server.RequestHandler;
 import com.github.dolly0526.jessicarpc.core.server.RequestHandlerRegistry;
 import com.github.dolly0526.jessicarpc.core.transport.protocol.Command;
 import io.netty.channel.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author yusenyang
  * @create 2021/3/9 12:16
  */
+@Slf4j
 @ChannelHandler.Sharable
 public class RequestInvocation extends SimpleChannelInboundHandler<Command> {
-    private static final Logger logger = LoggerFactory.getLogger(RequestInvocation.class);
+
+    // 存放所有在途请求，初始化时传入
     private final RequestHandlerRegistry requestHandlerRegistry;
 
 
@@ -30,12 +31,12 @@ public class RequestInvocation extends SimpleChannelInboundHandler<Command> {
             if (null != response) {
                 channelHandlerContext.writeAndFlush(response).addListener((ChannelFutureListener) channelFuture -> {
                     if (!channelFuture.isSuccess()) {
-                        logger.warn("Write response failed!", channelFuture.cause());
+                        log.warn("Write response failed!", channelFuture.cause());
                         channelHandlerContext.channel().close();
                     }
                 });
             } else {
-                logger.warn("Response is null!");
+                log.warn("Response is null!");
             }
         } else {
             throw new Exception(String.format("No handler for request with type: %d!", request.getHeader().getType()));
@@ -44,9 +45,10 @@ public class RequestInvocation extends SimpleChannelInboundHandler<Command> {
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        logger.warn("Exception: ", cause);
 
+        log.warn("Exception: ", cause);
         super.exceptionCaught(ctx, cause);
+
         Channel channel = ctx.channel();
         if (channel.isActive()) ctx.close();
     }

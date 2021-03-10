@@ -1,7 +1,7 @@
 package com.github.dolly0526.jessicarpc.core.transport.netty.handler;
 
-import com.github.dolly0526.jessicarpc.core.transport.dispatcher.RequestPendingCenter;
-import com.github.dolly0526.jessicarpc.core.transport.dispatcher.ResponseFuture;
+import com.github.dolly0526.jessicarpc.core.client.dispatcher.ResponsePendingCenter;
+import com.github.dolly0526.jessicarpc.core.client.dispatcher.ResponseFuture;
 import com.github.dolly0526.jessicarpc.core.transport.protocol.Command;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
@@ -20,11 +20,11 @@ import lombok.extern.slf4j.Slf4j;
 public class ResponseInvocation extends SimpleChannelInboundHandler<Command> {
 
     // 存放所有在途请求，初始化时传入
-    private final RequestPendingCenter requestPendingCenter;
+    private final ResponsePendingCenter responsePendingCenter;
 
 
-    public ResponseInvocation(RequestPendingCenter requestPendingCenter) {
-        this.requestPendingCenter = requestPendingCenter;
+    public ResponseInvocation(ResponsePendingCenter responsePendingCenter) {
+        this.responsePendingCenter = responsePendingCenter;
     }
 
 
@@ -32,7 +32,7 @@ public class ResponseInvocation extends SimpleChannelInboundHandler<Command> {
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, Command response) {
 
         // 此时响应发回了，从requestPendingCenter中删掉对应的对象，把结果塞给该future对象供业务使用
-        ResponseFuture future = requestPendingCenter.remove(response.getHeader().getRequestId());
+        ResponseFuture future = responsePendingCenter.remove(response.getHeader().getRequestId());
 
         if (future != null) {
             future.getFuture().complete(response);
