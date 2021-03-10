@@ -21,10 +21,13 @@ public class ResponseHeader extends Header {
     private String error;
 
 
+    /**
+     * 除了上述4个基本属性，还需要传输错误信息的长度，以及错误信息的内容
+     */
     @Override
     public int length() {
         return Integer.BYTES + Integer.BYTES + Integer.BYTES + Integer.BYTES +
-                SimpleRpcConst.DEFAULT_LENGTH_FIELD + /** 除了上述4个属性，还需要传输错误信息的长度 **/
+                SimpleRpcConst.DEFAULT_LENGTH_FIELD +
                 (error == null ? 0 : error.getBytes(SimpleRpcConst.DEFAULT_CHARSET).length);
     }
 

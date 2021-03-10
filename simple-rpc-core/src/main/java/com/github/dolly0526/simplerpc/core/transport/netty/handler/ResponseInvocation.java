@@ -1,7 +1,7 @@
 package com.github.dolly0526.simplerpc.core.transport.netty.handler;
 
-import com.github.dolly0526.simplerpc.core.client.response.InFlightRequests;
-import com.github.dolly0526.simplerpc.core.client.response.ResponseFuture;
+import com.github.dolly0526.simplerpc.core.transport.netty.dispatcher.RequestPool;
+import com.github.dolly0526.simplerpc.core.transport.netty.dispatcher.ResponseFuture;
 import com.github.dolly0526.simplerpc.core.transport.protocol.Command;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
@@ -17,17 +17,17 @@ import org.slf4j.LoggerFactory;
 @ChannelHandler.Sharable
 public class ResponseInvocation extends SimpleChannelInboundHandler<Command> {
     private static final Logger logger = LoggerFactory.getLogger(ResponseInvocation.class);
-    private final InFlightRequests inFlightRequests;
+    private final RequestPool requestPool;
 
 
-    public ResponseInvocation(InFlightRequests inFlightRequests) {
-        this.inFlightRequests = inFlightRequests;
+    public ResponseInvocation(RequestPool requestPool) {
+        this.requestPool = requestPool;
     }
 
 
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, Command response) {
-        ResponseFuture future = inFlightRequests.remove(response.getHeader().getRequestId());
+        ResponseFuture future = requestPool.remove(response.getHeader().getRequestId());
         if (null != future) {
             future.getFuture().complete(response);
         } else {

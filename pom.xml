@@ -9,7 +9,7 @@
     <version>1.1-SNAPSHOT</version>
 
     <name>simple-rpc</name>
-    <description>A simple RPC framework based on Netty, SpringBoot And ZooKeeper</description>
+    <description>A simple RPC framework based on Netty</description>
     <inceptionYear>SINCE 2021/03/01</inceptionYear>
 
     <modules>

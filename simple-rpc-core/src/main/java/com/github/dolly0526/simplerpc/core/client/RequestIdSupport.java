@@ -10,7 +10,9 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class RequestIdSupport {
 
+    // TODO 换成AtomicLong否则最大值太小
     private final static AtomicInteger nextRequestId = new AtomicInteger(0);
+
 
     public static int next() {
         return nextRequestId.getAndIncrement();

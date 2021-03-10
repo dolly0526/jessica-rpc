@@ -5,7 +5,7 @@ import com.github.dolly0526.simplerpc.core.transport.protocol.Command;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * 通信相关方法
+ * 客户端通信相关的方法
  *
  * @author yusenyang
  * @create 2021/3/8 18:34

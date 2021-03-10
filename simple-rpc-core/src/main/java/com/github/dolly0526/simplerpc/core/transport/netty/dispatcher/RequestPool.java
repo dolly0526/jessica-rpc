@@ -1,16 +1,16 @@
-package com.github.dolly0526.simplerpc.core.client.response;
+package com.github.dolly0526.simplerpc.core.transport.netty.dispatcher;
 
 import java.io.Closeable;
 import java.util.Map;
 import java.util.concurrent.*;
 
 /**
- * 通过响应分发获取响应
+ * 将所有发出去的响应池化，需要获取结果的时候根据id获取，同时也需要进行一些限流
  *
  * @author yusenyang
  * @create 2021/3/8 20:33
  */
-public class InFlightRequests implements Closeable {
+public class RequestPool implements Closeable {
 
     // 背压机制，限制请求并发量
     private final Semaphore semaphore = new Semaphore(10);
@@ -24,7 +24,7 @@ public class InFlightRequests implements Closeable {
     private final ScheduledFuture scheduledFuture;
 
 
-    public InFlightRequests() {
+    public RequestPool() {
         scheduledFuture = scheduledExecutorService.scheduleAtFixedRate(this::removeTimeoutFutures, TIMEOUT_SEC, TIMEOUT_SEC, TimeUnit.SECONDS);
     }
 

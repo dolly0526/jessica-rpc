@@ -1,9 +1,7 @@
-package com.github.dolly0526.simplerpc.core.transport.netty;
+package com.github.dolly0526.simplerpc.core.transport.netty.dispatcher;
 
-import com.github.dolly0526.simplerpc.core.client.response.InFlightRequests;
 import com.github.dolly0526.simplerpc.core.transport.Transport;
 import com.github.dolly0526.simplerpc.core.transport.protocol.Command;
-import com.github.dolly0526.simplerpc.core.client.response.ResponseFuture;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFutureListener;
 
@@ -16,12 +14,12 @@ import java.util.concurrent.CompletableFuture;
 public class NettyTransport implements Transport {
 
     private final Channel channel;
-    private final InFlightRequests inFlightRequests;
+    private final RequestPool requestPool;
 
 
-    public NettyTransport(Channel channel, InFlightRequests inFlightRequests) {
+    public NettyTransport(Channel channel, RequestPool requestPool) {
         this.channel = channel;
-        this.inFlightRequests = inFlightRequests;
+        this.requestPool = requestPool;
     }
 
 
@@ -33,7 +31,7 @@ public class NettyTransport implements Transport {
 
         try {
             // 将在途请求放到inFlightRequests中
-            inFlightRequests.put(new ResponseFuture(request.getHeader().getRequestId(), completableFuture));
+            requestPool.put(new ResponseFuture(request.getHeader().getRequestId(), completableFuture));
 
             // 发送命令
             channel.writeAndFlush(request).addListener((ChannelFutureListener) channelFuture -> {
@@ -45,7 +43,7 @@ public class NettyTransport implements Transport {
             });
         } catch (Throwable t) {
             // 处理发送异常
-            inFlightRequests.remove(request.getHeader().getRequestId());
+            requestPool.remove(request.getHeader().getRequestId());
             completableFuture.completeExceptionally(t);
         }
 

@@ -26,9 +26,7 @@ public class Header {
 
 
     /**
-     * 该请求头部的长度
-     *
-     * @return
+     * 该请求头部的长度，即为上述3个int字段的长度
      */
     public int length() {
         return Integer.BYTES + Integer.BYTES + Integer.BYTES;

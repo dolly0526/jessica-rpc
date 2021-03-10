@@ -1,4 +1,4 @@
-package com.github.dolly0526.simplerpc.core.client.response;
+package com.github.dolly0526.simplerpc.core.transport.netty.dispatcher;
 
 import com.github.dolly0526.simplerpc.core.transport.protocol.Command;
 
