@@ -11,7 +11,7 @@ import java.util.Map;
  * @author yusenyang
  * @create 2021/3/9 15:18
  */
-public class DynamicStubFactory implements StubFactory {
+public class TemplateStubFactory implements StubFactory {
     private final static String STUB_SOURCE_TEMPLATE =
             "package com.github.dolly0526.simplerpc.core.client.stubs;\n" +
             "import com.github.dolly0526.simplerpc.core.serialize.SerializeSupport;\n" +

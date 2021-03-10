@@ -19,9 +19,7 @@ public abstract class CommandDecoder extends ByteToMessageDecoder {
     protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf, List<Object> list) {
 
         // 此处解决半包问题，如果连存放长度的4字节都被拆开了，则继续等待
-        if (!byteBuf.isReadable(JessicaRpcConst.DEFAULT_LENGTH_FIELD)) {
-            return;
-        }
+        if (!byteBuf.isReadable(JessicaRpcConst.DEFAULT_LENGTH_FIELD)) return;
 
         // 对当前byteBuf的index进行存档，处理粘包半包问题
         byteBuf.markReaderIndex();
@@ -51,10 +49,6 @@ public abstract class CommandDecoder extends ByteToMessageDecoder {
 
     /**
      * 从byteBuf读出消息头部
-     *
-     * @param channelHandlerContext
-     * @param byteBuf
-     * @return
      */
     protected abstract Header decodeHeader(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf);
 }

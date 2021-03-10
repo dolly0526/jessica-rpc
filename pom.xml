@@ -9,7 +9,7 @@
     <version>1.1-SNAPSHOT</version>
 
     <name>jessica-rpc</name>
-    <description>An RPC framework based on Netty</description>
+    <description>A simple RPC framework based on Netty</description>
     <inceptionYear>SINCE 2021/03/01</inceptionYear>
 
     <modules>

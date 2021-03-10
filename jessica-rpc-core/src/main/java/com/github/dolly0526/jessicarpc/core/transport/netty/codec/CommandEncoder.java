@@ -34,11 +34,6 @@ public abstract class CommandEncoder extends MessageToByteEncoder<Object> {
 
     /**
      * 将消息头部写到byteBuf缓冲区
-     *
-     * @param channelHandlerContext
-     * @param header
-     * @param byteBuf
-     * @throws Exception
      */
     protected void encodeHeader(ChannelHandlerContext channelHandlerContext, Header header, ByteBuf byteBuf) throws Exception {
 

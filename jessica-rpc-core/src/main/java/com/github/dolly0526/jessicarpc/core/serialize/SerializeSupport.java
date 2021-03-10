@@ -88,9 +88,7 @@ public class SerializeSupport {
      */
     @SuppressWarnings("unchecked")
     public static <E> byte[] serialize(E entry) {
-        if (entry == null) {
-            return null;
-        }
+        if (entry == null) return null;
 
         // 根据类型获取对应的Serializer，默认使用Object的序列化
         Serializer<E> serializer = (Serializer<E>) serializerMap.getOrDefault(entry.getClass(), serializerMap.get(Object.class));

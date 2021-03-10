@@ -1,44 +1,53 @@
 package com.github.dolly0526.jessicarpc.core.transport.netty.handler;
 
-import com.github.dolly0526.jessicarpc.core.transport.netty.dispatcher.RequestPool;
-import com.github.dolly0526.jessicarpc.core.transport.netty.dispatcher.ResponseFuture;
+import com.github.dolly0526.jessicarpc.core.transport.dispatcher.RequestPendingCenter;
+import com.github.dolly0526.jessicarpc.core.transport.dispatcher.ResponseFuture;
 import com.github.dolly0526.jessicarpc.core.transport.protocol.Command;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
+ * netty客户端的handler，用来接收请求，并放进requestPendingCenter
+ *
  * @author yusenyang
  * @create 2021/3/9 12:17
  */
+@Slf4j
 @ChannelHandler.Sharable
 public class ResponseInvocation extends SimpleChannelInboundHandler<Command> {
-    private static final Logger logger = LoggerFactory.getLogger(ResponseInvocation.class);
-    private final RequestPool requestPool;
+
+    // 存放所有在途请求，初始化时传入
+    private final RequestPendingCenter requestPendingCenter;
 
 
-    public ResponseInvocation(RequestPool requestPool) {
-        this.requestPool = requestPool;
+    public ResponseInvocation(RequestPendingCenter requestPendingCenter) {
+        this.requestPendingCenter = requestPendingCenter;
     }
 
 
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, Command response) {
-        ResponseFuture future = requestPool.remove(response.getHeader().getRequestId());
-        if (null != future) {
+
+        // 此时响应发回了，从requestPendingCenter中删掉对应的对象，把结果塞给该future对象供业务使用
+        ResponseFuture future = requestPendingCenter.remove(response.getHeader().getRequestId());
+
+        if (future != null) {
             future.getFuture().complete(response);
+
         } else {
-            logger.warn("Drop response: {}", response);
+            log.warn("Drop response: {}", response);
         }
     }
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        logger.warn("Exception: ", cause);
+
+        log.warn("Exception: ", cause);
         super.exceptionCaught(ctx, cause);
+
         Channel channel = ctx.channel();
         if (channel.isActive()) ctx.close();
     }
