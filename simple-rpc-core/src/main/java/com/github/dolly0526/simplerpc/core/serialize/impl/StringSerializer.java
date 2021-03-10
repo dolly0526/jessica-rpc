@@ -29,8 +29,8 @@ public class StringSerializer implements Serializer<String> {
     }
 
     @Override
-    public byte type() {
-        return Types.TYPE_STRING;
+    public byte getSerializeType() {
+        return SerializeType.TYPE_STRING;
     }
 
     @Override

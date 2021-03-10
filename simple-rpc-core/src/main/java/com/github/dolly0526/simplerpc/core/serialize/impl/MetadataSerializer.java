@@ -99,8 +99,8 @@ public class MetadataSerializer implements Serializer<Metadata> {
     }
 
     @Override
-    public byte type() {
-        return Types.TYPE_METADATA;
+    public byte getSerializeType() {
+        return SerializeType.TYPE_METADATA;
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.github.dolly0526.simplerpc.core.serialize;
 
 /**
- * 通用的序列化接口
+ * 通用的序列化接口，可以根据各种通用的序列化框架进一步实现
  *
  * @author yusenyang
  * @create 2021/3/8 18:13
@@ -39,7 +39,7 @@ public interface Serializer<T> {
     /**
      * 用一个字节标识对象类型，每种类型的数据应该具有不同的类型值
      */
-    byte type();
+    byte getSerializeType();
 
     /**
      * 返回序列化对象类型的Class对象。

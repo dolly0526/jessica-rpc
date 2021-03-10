@@ -15,7 +15,7 @@ public abstract class AbstractJsonSerializer<T> implements Serializer<T> {
     @Override
     public int size(T entry) {
 
-        // 长度 + 内容的字节数组
+        // 先放长度，再放内容
         return Integer.BYTES + JSON.toJSONString(entry).getBytes(SimpleRpcConst.DEFAULT_CHARSET).length;
     }
 }
