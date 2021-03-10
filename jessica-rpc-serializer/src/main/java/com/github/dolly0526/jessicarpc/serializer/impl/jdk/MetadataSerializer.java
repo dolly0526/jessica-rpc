@@ -1,8 +1,9 @@
-package com.github.dolly0526.jessicarpc.serializer.impl;
+package com.github.dolly0526.jessicarpc.serializer.impl.jdk;
 
 import com.github.dolly0526.jessicarpc.common.constant.JessicaRpcConst;
 import com.github.dolly0526.jessicarpc.serializer.Serializer;
 import com.github.dolly0526.jessicarpc.common.model.Metadata;
+import com.github.dolly0526.jessicarpc.serializer.impl.SerializeType;
 
 import java.net.URI;
 import java.nio.ByteBuffer;

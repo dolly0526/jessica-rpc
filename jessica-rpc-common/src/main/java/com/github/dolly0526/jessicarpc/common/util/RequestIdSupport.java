@@ -1,4 +1,4 @@
-package com.github.dolly0526.jessicarpc.core.client;
+package com.github.dolly0526.jessicarpc.common.util;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

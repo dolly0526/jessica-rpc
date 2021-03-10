@@ -1,5 +1,7 @@
-package com.github.dolly0526.jessicarpc.core.client;
+package com.github.dolly0526.jessicarpc.core.client.impl;
 
+import com.github.dolly0526.jessicarpc.core.client.ServiceStub;
+import com.github.dolly0526.jessicarpc.core.client.StubFactory;
 import com.github.dolly0526.jessicarpc.core.transport.Transport;
 import com.itranswarp.compiler.JavaStringCompiler;
 
@@ -17,7 +19,7 @@ public class TemplateStubFactory implements StubFactory {
             "import com.github.dolly0526.jessicarpc.common.model.RpcRequest;\n" +
             "import com.github.dolly0526.jessicarpc.serializer.SerializeSupport;\n" +
             "\n" +
-            "public class %s extends AbstractStub implements %s {\n" +
+            "public class %s extends AbstractServiceStub implements %s {\n" +
             "    @Override\n" +
             "    public String %s(String arg) {\n" +
             "        return SerializeSupport.parse(\n" +
@@ -44,16 +46,18 @@ public class TemplateStubFactory implements StubFactory {
             String stubFullName = "com.github.dolly0526.jessicarpc.core.client.stubs." + stubSimpleName;
             String methodName = serviceClass.getMethods()[0].getName();
 
-            String source = String.format(STUB_SOURCE_TEMPLATE, stubSimpleName, classFullName, methodName, classFullName, methodName);
             // 编译源代码
+            String source = String.format(STUB_SOURCE_TEMPLATE, stubSimpleName, classFullName, methodName, classFullName, methodName);
             JavaStringCompiler compiler = new JavaStringCompiler();
             Map<String, byte[]> results = compiler.compile(stubSimpleName + ".java", source);
+
             // 加载编译好的类
             Class<?> clazz = compiler.loadClass(stubFullName, results);
 
             // 把Transport赋值给桩
             ServiceStub stubInstance = (ServiceStub) clazz.newInstance();
             stubInstance.setTransport(transport);
+
             // 返回这个桩
             return (T) stubInstance;
 

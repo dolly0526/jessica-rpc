@@ -1,6 +1,6 @@
 package com.github.dolly0526.jessicarpc.core.server;
 
-import com.github.dolly0526.jessicarpc.core.client.ServiceTypes;
+import com.github.dolly0526.jessicarpc.core.client.ServiceType;
 import com.github.dolly0526.jessicarpc.common.model.RpcRequest;
 import com.github.dolly0526.jessicarpc.api.spi.Singleton;
 import com.github.dolly0526.jessicarpc.serializer.SerializeSupport;
@@ -34,6 +34,13 @@ public class RpcRequestHandler implements RequestHandler, ServiceProviderRegistr
             Object serviceProvider = serviceProviders.get(rpcRequest.getInterfaceName());
             if (serviceProvider != null) {
                 // 找到服务提供者，利用Java反射机制调用服务的对应方法
+//                Object[] arg = SerializeSupport.parse(rpcRequest.getSerializedArguments());
+//                Class[] paraTypes = new Class[arg.length];
+//                for (int i = 0; i < paraTypes.length; i++) {
+//                    paraTypes[i] = arg[i].getClass();
+//                }
+//                Method method = serviceProvider.getClass().getMethod(rpcRequest.getMethodName(), paraTypes);
+//                Object result = method.invoke(serviceProvider, arg);
                 String arg = SerializeSupport.parse(rpcRequest.getSerializedArguments());
                 Method method = serviceProvider.getClass().getMethod(rpcRequest.getMethodName(), String.class);
                 String result = (String) method.invoke(serviceProvider, arg);
@@ -52,7 +59,7 @@ public class RpcRequestHandler implements RequestHandler, ServiceProviderRegistr
 
     @Override
     public int type() {
-        return ServiceTypes.TYPE_RPC_REQUEST;
+        return ServiceType.TYPE_RPC_REQUEST;
     }
 
     @Override

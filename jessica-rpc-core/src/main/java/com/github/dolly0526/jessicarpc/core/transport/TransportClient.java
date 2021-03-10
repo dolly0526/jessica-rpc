@@ -5,11 +5,16 @@ import java.net.SocketAddress;
 import java.util.concurrent.TimeoutException;
 
 /**
+ * 客户端接口
+ *
  * @author yusenyang
  * @create 2021/3/9 18:59
  */
 public interface TransportClient extends Closeable {
 
+    /**
+     * 根据地址和超时时间创建一个连接对象
+     */
     Transport createTransport(SocketAddress address, long connectionTimeout) throws InterruptedException, TimeoutException;
 
     @Override
