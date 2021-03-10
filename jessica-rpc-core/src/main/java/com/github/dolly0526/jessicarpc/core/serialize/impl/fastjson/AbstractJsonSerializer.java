@@ -5,7 +5,7 @@ import com.github.dolly0526.jessicarpc.core.serialize.Serializer;
 import com.github.dolly0526.jessicarpc.common.constant.JessicaRpcConst;
 
 /**
- * 用通用的序列化方法JSON再封装一层，用于简化对参数的序列化；同理可使用Hessian、Protobuf等通用的序列化工具进行序列化
+ * 用通用的序列化方法JSON再封装一层，同理可使用Hessian、Protobuf等通用的序列化工具进行序列化
  *
  * @author yusenyang
  * @create 2021/3/9 14:14
