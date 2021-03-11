@@ -22,7 +22,7 @@ public class StringSerializer implements Serializer<String> {
     }
 
     @Override
-    public String parse(byte[] bytes, int offset, int length) {
+    public <E> String parse(byte[] bytes, int offset, int length, Class<E> eClass) {
         return new String(bytes, offset, length, JessicaRpcConst.DEFAULT_CHARSET);
     }
 

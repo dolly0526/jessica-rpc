@@ -1,5 +1,7 @@
 package com.github.dolly0526.jessicarpc.sample.impl;
 
+import com.github.dolly0526.jessicarpc.sample.HelloRequest;
+import com.github.dolly0526.jessicarpc.sample.HelloResult;
 import com.github.dolly0526.jessicarpc.sample.HelloService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,28 +20,28 @@ public class HelloServiceImpl implements HelloService {
         return ret;
     }
 
-//    @Override
-//    public HelloResult helloMoreResult(String name, String value) {
-//
-//        log.info("HelloServiceImpl收到: {}.", name, value);
-//        HelloResult result = new HelloResult();
-//        result.setSuccess(true);
-//        result.setResult("Success");
-//        result.setResultCode("1");
-//        log.info("HelloServiceImpl返回: {}.", result.toString());
-//
-//        return result;
-//    }
-//
-//    @Override
-//    public HelloResult helloMoreResult(HelloRequest request) {
-//
-//        log.info("HelloServiceImpl收到: {}.", request.toString());
-//        HelloResult result = new HelloResult();
-//        result.setSuccess(true);
-//        result.setResult("Success");
-//        result.setResultCode("1");
-//        log.info("HelloServiceImpl返回: {}.", result.toString());
-//        return result;
-//    }
+    @Override
+    public HelloResult helloMoreResult(String name, String value) {
+
+        log.info("HelloServiceImpl收到: {}.", name, value);
+        HelloResult result = new HelloResult();
+        result.setSuccess(true);
+        result.setResult("Success");
+        result.setResultCode("1");
+        log.info("HelloServiceImpl返回: {}.", result.toString());
+
+        return result;
+    }
+
+    @Override
+    public HelloResult helloMoreResult(HelloRequest request) {
+
+        log.info("HelloServiceImpl收到: {}.", request.toString());
+        HelloResult result = new HelloResult();
+        result.setSuccess(true);
+        result.setResult("Success");
+        result.setResultCode("1");
+        log.info("HelloServiceImpl返回: {}.", result.toString());
+        return result;
+    }
 }

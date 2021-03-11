@@ -32,9 +32,10 @@ public interface Serializer<T> {
      * @param bytes  存放序列化数据的字节数组
      * @param offset 数组的偏移量，从这个位置开始写入序列化数据
      * @param length 对象序列化后的长度
+     * @param eClass 反序列化的填充类型
      * @return 反序列化之后生成的对象
      */
-    T parse(byte[] bytes, int offset, int length);
+    <E> T parse(byte[] bytes, int offset, int length, Class<E> eClass);
 
     /**
      * 用一个字节标识对象类型，每种类型的数据应该具有不同的类型值

@@ -35,8 +35,11 @@ public class SimpleRpcClientDemo {
             HelloService helloService = rpcAccessPoint.getRemoteService(uri, HelloService.class);
             log.info("请求服务, name: {}...", name);
 
-            String response = helloService.hello(name);
-            log.info("收到响应: {}.", response);
+//            String response1 = helloService.hello(name);
+//            log.error("收到响应: {}.", response1);
+
+            HelloResult response2 = helloService.helloMoreResult(name, "你好");
+            log.error("收到响应: {}.", response2);
         }
     }
 }

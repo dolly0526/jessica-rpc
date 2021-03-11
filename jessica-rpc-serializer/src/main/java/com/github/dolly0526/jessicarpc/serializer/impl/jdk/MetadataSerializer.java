@@ -73,7 +73,7 @@ public class MetadataSerializer implements Serializer<Metadata> {
     }
 
     @Override
-    public Metadata parse(byte[] bytes, int offset, int length) {
+    public <E> Metadata parse(byte[] bytes, int offset, int length, Class<E> eClass) {
         ByteBuffer buffer = ByteBuffer.wrap(bytes, offset, length);
 
         Metadata metadata = new Metadata();

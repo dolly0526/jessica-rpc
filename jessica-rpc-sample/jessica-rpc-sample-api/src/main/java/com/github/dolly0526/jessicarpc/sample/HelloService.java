@@ -8,7 +8,7 @@ public interface HelloService {
 
     String hello(String name);
 
-//    HelloResult helloMoreResult(String name,String value);
-//
-//    HelloResult helloMoreResult(HelloRequest request);
+    HelloResult helloMoreResult(String name, String value);
+
+    HelloResult helloMoreResult(HelloRequest request);
 }

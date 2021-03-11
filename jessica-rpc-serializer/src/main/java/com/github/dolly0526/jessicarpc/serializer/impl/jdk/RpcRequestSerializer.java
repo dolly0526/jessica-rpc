@@ -40,7 +40,7 @@ public class RpcRequestSerializer implements Serializer<RpcRequest> {
     }
 
     @Override
-    public RpcRequest parse(byte[] bytes, int offset, int length) {
+    public <E> RpcRequest parse(byte[] bytes, int offset, int length, Class<E> eClass) {
         ByteBuffer buffer = ByteBuffer.wrap(bytes, offset, length);
 
         int len = buffer.getInt();

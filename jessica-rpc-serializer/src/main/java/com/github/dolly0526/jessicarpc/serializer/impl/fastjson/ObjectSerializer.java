@@ -27,7 +27,7 @@ public class ObjectSerializer extends AbstractJsonSerializer<Object> {
     }
 
     @Override
-    public Object parse(byte[] bytes, int offset, int length) {
+    public <E> Object parse(byte[] bytes, int offset, int length, Class<E> eClass) {
         ByteBuffer buffer = ByteBuffer.wrap(bytes, offset, length);
 
         // 第一个int是长度
@@ -36,7 +36,14 @@ public class ObjectSerializer extends AbstractJsonSerializer<Object> {
 
         // 再获取内容
         buffer.get(jsonBytes);
-        return JSON.parseObject(jsonBytes, getSerializeClass());
+
+        // 此处类型推断，如果传了eClass就用这个，没有就用默认的
+        if (eClass == null) {
+            return JSON.parseObject(jsonBytes, getSerializeClass());
+
+        } else {
+            return JSON.parseObject(jsonBytes, eClass);
+        }
     }
 
     @Override
