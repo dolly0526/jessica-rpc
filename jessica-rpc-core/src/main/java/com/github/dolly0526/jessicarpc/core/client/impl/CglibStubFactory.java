@@ -6,7 +6,7 @@ import com.github.dolly0526.jessicarpc.core.transport.Transport;
 import org.springframework.cglib.proxy.Enhancer;
 
 /**
- * 基于cglib生成代理
+ * 基于cglib，为接口生成代理
  *
  * @author yusenyang
  * @create 2021/3/10 20:31

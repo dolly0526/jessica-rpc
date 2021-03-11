@@ -8,7 +8,7 @@ import com.itranswarp.compiler.JavaStringCompiler;
 import java.util.Map;
 
 /**
- * 通过动态生成字节码文件进行代理
+ * 基于类模版，动态生成字节码文件进行代理
  *
  * @author yusenyang
  * @create 2021/3/9 15:18
@@ -45,9 +45,9 @@ public class TemplateStubFactory implements StubFactory {
             String classFullName = serviceClass.getName();
             String stubFullName = "com.github.dolly0526.jessicarpc.core.client.stub." + stubSimpleName;
             String methodName = serviceClass.getMethods()[0].getName();
+            String source = String.format(STUB_SOURCE_TEMPLATE, stubSimpleName, classFullName, methodName, classFullName, methodName);
 
             // 编译源代码
-            String source = String.format(STUB_SOURCE_TEMPLATE, stubSimpleName, classFullName, methodName, classFullName, methodName);
             JavaStringCompiler compiler = new JavaStringCompiler();
             Map<String, byte[]> results = compiler.compile(stubSimpleName + ".java", source);
 

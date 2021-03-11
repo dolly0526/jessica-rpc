@@ -7,6 +7,8 @@ import com.github.dolly0526.jessicarpc.core.transport.Transport;
 import java.lang.reflect.Proxy;
 
 /**
+ * 基于jdk，为接口生成代理
+ *
  * @author yusenyang
  * @create 2021/3/10 20:37
  */
