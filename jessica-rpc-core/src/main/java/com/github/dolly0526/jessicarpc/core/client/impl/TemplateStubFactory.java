@@ -17,7 +17,7 @@ import java.util.Map;
 @Singleton
 public class TemplateStubFactory implements StubFactory {
     private final static String STUB_SOURCE_TEMPLATE =
-            "package com.github.dolly0526.jessicarpc.proxy.stub;\n" +
+            "package com.github.dolly0526.jessicarpc.client.stub;\n" +
             "import com.github.dolly0526.jessicarpc.common.model.RpcRequest;\n" +
             "import com.github.dolly0526.jessicarpc.serializer.SerializeSupport;\n" +
             "\n" +
@@ -45,7 +45,7 @@ public class TemplateStubFactory implements StubFactory {
             // 填充模板
             String stubSimpleName = serviceClass.getSimpleName() + "Stub";
             String classFullName = serviceClass.getName();
-            String stubFullName = "com.github.dolly0526.jessicarpc.proxy.stub." + stubSimpleName;
+            String stubFullName = "com.github.dolly0526.jessicarpc.client.stub." + stubSimpleName;
             String methodName = serviceClass.getMethods()[0].getName();
             String source = String.format(STUB_SOURCE_TEMPLATE, stubSimpleName, classFullName, methodName, classFullName, methodName);
 
