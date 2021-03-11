@@ -16,7 +16,7 @@ import java.net.URI;
  * @create 2021/3/9 19:06
  */
 @Slf4j
-public class SimpleRpcServerDemo {
+public class JessicaRpcServerDemo {
 
     public static void main(String[] args) throws Exception {
 

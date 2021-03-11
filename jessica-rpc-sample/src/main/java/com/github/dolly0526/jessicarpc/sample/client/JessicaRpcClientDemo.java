@@ -17,7 +17,7 @@ import java.net.URI;
  * @create 2021/3/9 19:05
  */
 @Slf4j
-public class SimpleRpcClientDemo {
+public class JessicaRpcClientDemo {
 
     public static void main(String[] args) throws IOException {
 
