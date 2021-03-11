@@ -4,8 +4,7 @@ import com.github.dolly0526.jessicarpc.api.NameService;
 import com.github.dolly0526.jessicarpc.common.annotation.Singleton;
 import com.github.dolly0526.jessicarpc.common.model.Metadata;
 import com.github.dolly0526.jessicarpc.serializer.SerializeSupport;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,11 +23,14 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author yusenyang
  * @create 2021/3/9 17:36
  */
+@Slf4j
 @Singleton
 public class LocalFileNameService implements NameService {
-    private static final Logger logger = LoggerFactory.getLogger(LocalFileNameService.class);
+
+    // 只支持文件协议
     private static final Collection<String> schemes = Collections.singleton("file");
     private File file;
+
 
     @Override
     public Collection<String> supportedSchemes() {
@@ -46,7 +48,7 @@ public class LocalFileNameService implements NameService {
 
     @Override
     public synchronized void registerService(String serviceName, URI uri) throws IOException {
-        logger.info("Register service: {}, uri: {}.", serviceName, uri);
+        log.info("Register service: {}, uri: {}.", serviceName, uri);
         try (RandomAccessFile raf = new RandomAccessFile(file, "rw");
              FileChannel fileChannel = raf.getChannel()) {
             FileLock lock = fileChannel.lock();
@@ -69,7 +71,7 @@ public class LocalFileNameService implements NameService {
                 if (!uris.contains(uri)) {
                     uris.add(uri);
                 }
-                logger.info(metadata.toString());
+                log.info(metadata.toString());
 
                 bytes = SerializeSupport.serialize(metadata);
                 fileChannel.truncate(bytes.length);
@@ -95,7 +97,7 @@ public class LocalFileNameService implements NameService {
                     fileChannel.read(buffer);
                 }
                 metadata = bytes.length == 0 ? new Metadata() : SerializeSupport.parse(bytes);
-                logger.info(metadata.toString());
+                log.info(metadata.toString());
             } finally {
                 lock.release();
             }

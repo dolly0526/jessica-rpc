@@ -3,7 +3,7 @@ package com.github.dolly0526.jessicarpc.core.client;
 import com.github.dolly0526.jessicarpc.core.transport.Transport;
 
 /**
- * 生成代理的工厂类
+ * 生成接口代理的工厂类
  *
  * @author yusenyang
  * @create 2021/3/9 14:53

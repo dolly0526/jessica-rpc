@@ -14,66 +14,67 @@ import io.netty.channel.epoll.EpollEventLoopGroup;
 import io.netty.channel.epoll.EpollServerSocketChannel;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
+ * 基于netty实现服务端
+ *
  * @author yusenyang
  * @create 2021/3/9 19:02
  */
+@Slf4j
 @Singleton
 public class NettyServer implements TransportServer {
-    private static final Logger logger = LoggerFactory.getLogger(NettyServer.class);
-    private int port;
+
+    // 管理所有命令处理器
+    private RequestHandlerRegistry requestHandlerRegistry;
+
+    // netty客户端必备的一些对象
     private EventLoopGroup acceptEventGroup;
     private EventLoopGroup ioEventGroup;
     private Channel channel;
-    private RequestHandlerRegistry requestHandlerRegistry;
+
+
+    // spi加载的时候调用无参构造器，初始化requestHandlerRegistry
+    public NettyServer() {
+        this.requestHandlerRegistry = RequestHandlerRegistry.getInstance();
+    }
 
 
     @Override
-    public void start(RequestHandlerRegistry requestHandlerRegistry, int port) throws Exception {
-        this.port = port;
-        this.requestHandlerRegistry = requestHandlerRegistry;
-        EventLoopGroup acceptEventGroup = newEventLoopGroup();
-        EventLoopGroup ioEventGroup = newEventLoopGroup();
+    public void start(int port) throws Exception {
+
+        // 主从reactor需要两个group
+        acceptEventGroup = newEventLoopGroup();
+        ioEventGroup = newEventLoopGroup();
+
+        // 初始化服务端
         ChannelHandler channelHandlerPipeline = newChannelHandlerPipeline();
         ServerBootstrap serverBootstrap = newBootstrap(channelHandlerPipeline, acceptEventGroup, ioEventGroup);
-        Channel channel = doBind(serverBootstrap);
 
-        this.acceptEventGroup = acceptEventGroup;
-        this.ioEventGroup = ioEventGroup;
-        this.channel = channel;
-
+        // 绑定端口
+        channel = doBind(serverBootstrap, port);
     }
 
-    @Override
-    public void stop() {
-        if (acceptEventGroup != null) {
-            acceptEventGroup.shutdownGracefully();
-        }
-        if (ioEventGroup != null) {
-            ioEventGroup.shutdownGracefully();
-        }
-        if (channel != null) {
-            channel.close();
-        }
-    }
-
-    private Channel doBind(ServerBootstrap serverBootstrap) throws Exception {
+    /**
+     * 绑定端口
+     */
+    private Channel doBind(ServerBootstrap serverBootstrap, int port) throws Exception {
         return serverBootstrap.bind(port)
                 .sync()
                 .channel();
     }
 
+    /**
+     * 初始化工作group，优先使用epoll
+     */
     private EventLoopGroup newEventLoopGroup() {
-        if (Epoll.isAvailable()) {
-            return new EpollEventLoopGroup();
-        } else {
-            return new NioEventLoopGroup();
-        }
+        return Epoll.isAvailable() ? new EpollEventLoopGroup() : new NioEventLoopGroup();
     }
 
+    /**
+     * 初始化pipeline，一对编解码handler，以及一个业务处理handler；此处已经处理了粘包半包
+     */
     private ChannelHandler newChannelHandlerPipeline() {
         return new ChannelInitializer<Channel>() {
             @Override
@@ -86,12 +87,31 @@ public class NettyServer implements TransportServer {
         };
     }
 
+    /**
+     * 初始化服务端，优先使用epoll
+     */
     private ServerBootstrap newBootstrap(ChannelHandler channelHandler, EventLoopGroup acceptEventGroup, EventLoopGroup ioEventGroup) {
         ServerBootstrap serverBootstrap = new ServerBootstrap();
+
+        // 优先使用epoll，根据当前的操作系统选择是否开启
         serverBootstrap.channel(Epoll.isAvailable() ? EpollServerSocketChannel.class : NioServerSocketChannel.class)
                 .group(acceptEventGroup, ioEventGroup)
                 .childHandler(channelHandler)
                 .childOption(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT);
+
         return serverBootstrap;
+    }
+
+    @Override
+    public void close() {
+        if (acceptEventGroup != null) {
+            acceptEventGroup.shutdownGracefully();
+        }
+        if (ioEventGroup != null) {
+            ioEventGroup.shutdownGracefully();
+        }
+        if (channel != null) {
+            channel.close();
+        }
     }
 }

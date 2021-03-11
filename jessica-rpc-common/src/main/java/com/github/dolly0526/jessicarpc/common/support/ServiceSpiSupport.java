@@ -16,6 +16,8 @@ import java.util.stream.StreamSupport;
  * @create 2021/3/9 11:07
  */
 public class ServiceSpiSupport {
+
+    // TODO 可以通过spring ioc等方式实现ioc
     private final static Map<String, Object> singletonServices = new HashMap<>();
 
     public synchronized static <S> S load(Class<S> service) {
@@ -39,6 +41,7 @@ public class ServiceSpiSupport {
             String className = service.getClass().getCanonicalName();
             Object singletonInstance = singletonServices.putIfAbsent(className, service);
             return singletonInstance == null ? service : (S) singletonInstance;
+
         } else {
             return service;
         }

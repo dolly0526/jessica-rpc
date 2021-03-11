@@ -5,7 +5,7 @@ import com.github.dolly0526.jessicarpc.core.transport.protocol.Command;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * 客户端通信相关的方法，每个客户端持有一个
+ * 客户端通信相关的方法，每个客户端可以持有多个
  *
  * @author yusenyang
  * @create 2021/3/8 18:34

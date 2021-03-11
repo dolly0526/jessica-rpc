@@ -1,9 +1,8 @@
 package com.github.dolly0526.jessicarpc.core.transport.netty;
 
-import com.github.dolly0526.jessicarpc.common.annotation.Singleton;
+import com.github.dolly0526.jessicarpc.core.client.dispatcher.ResponsePendingCenter;
 import com.github.dolly0526.jessicarpc.core.transport.Transport;
 import com.github.dolly0526.jessicarpc.core.transport.TransportClient;
-import com.github.dolly0526.jessicarpc.core.client.dispatcher.ResponsePendingCenter;
 import com.github.dolly0526.jessicarpc.core.transport.netty.codec.RequestEncoder;
 import com.github.dolly0526.jessicarpc.core.transport.netty.codec.ResponseDecoder;
 import com.github.dolly0526.jessicarpc.core.transport.netty.handler.ResponseInvocation;
@@ -27,18 +26,18 @@ import java.util.concurrent.TimeoutException;
  * @author yusenyang
  * @create 2021/3/9 19:03
  */
-@Singleton
 public class NettyClient implements TransportClient {
+
+    // 存放所有在途的请求，根据requestId将异步的请求对应上
+    private final ResponsePendingCenter responsePendingCenter;
 
     // netty客户端必备的一些对象
     private EventLoopGroup ioEventGroup;
     private Bootstrap bootstrap;
     private List<Channel> channels = new LinkedList<>();
 
-    // 存放所有在途的请求，根据requestId将异步的请求对应上
-    private final ResponsePendingCenter responsePendingCenter;
 
-
+    // spi加载的时候调用无参构造器，初始化responsePendingCenter
     public NettyClient() {
         responsePendingCenter = new ResponsePendingCenter();
     }
@@ -62,10 +61,12 @@ public class NettyClient implements TransportClient {
             throw new IllegalArgumentException("address must not be null!");
         }
 
+        // 构造工作group
         if (ioEventGroup == null) {
             ioEventGroup = newIoEventGroup();
         }
 
+        // 初始化客户端
         if (bootstrap == null) {
             ChannelHandler channelHandlerPipeline = newChannelHandlerPipeline();
             bootstrap = newBootstrap(channelHandlerPipeline, ioEventGroup);
@@ -83,6 +84,7 @@ public class NettyClient implements TransportClient {
             throw new IllegalStateException();
         }
 
+        // 可能有多个通道，管理起来最后一起关闭
         channels.add(channel);
         return channel;
     }
@@ -131,7 +133,6 @@ public class NettyClient implements TransportClient {
                 channel.close();
             }
         }
-
         if (ioEventGroup != null) {
             ioEventGroup.shutdownGracefully();
         }

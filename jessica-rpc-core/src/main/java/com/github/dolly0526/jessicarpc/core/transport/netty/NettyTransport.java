@@ -1,9 +1,8 @@
 package com.github.dolly0526.jessicarpc.core.transport.netty;
 
-import com.github.dolly0526.jessicarpc.common.annotation.Singleton;
-import com.github.dolly0526.jessicarpc.core.transport.Transport;
-import com.github.dolly0526.jessicarpc.core.client.dispatcher.ResponsePendingCenter;
 import com.github.dolly0526.jessicarpc.core.client.dispatcher.ResponseFuture;
+import com.github.dolly0526.jessicarpc.core.client.dispatcher.ResponsePendingCenter;
+import com.github.dolly0526.jessicarpc.core.transport.Transport;
 import com.github.dolly0526.jessicarpc.core.transport.protocol.Command;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFutureListener;
@@ -16,7 +15,6 @@ import java.util.concurrent.CompletableFuture;
  * @author yusenyang
  * @create 2021/3/8 20:28
  */
-@Singleton
 public class NettyTransport implements Transport {
 
     // netty的管道，每个客户端持有一个channel对象
