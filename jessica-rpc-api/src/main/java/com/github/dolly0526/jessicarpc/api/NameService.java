@@ -25,15 +25,15 @@ public interface NameService {
     void connect(URI nameServiceUri);
 
     /**
-     * 注册服务
+     * 服务端方法，注册服务
      *
-     * @param serviceName 服务名称
+     * @param serviceName 服务名称，全类名
      * @param uri         服务地址
      */
     void registerService(String serviceName, URI uri) throws IOException;
 
     /**
-     * 查询服务地址
+     * 客户端方法，查询服务地址
      *
      * @param serviceName 服务名称
      * @return 服务地址

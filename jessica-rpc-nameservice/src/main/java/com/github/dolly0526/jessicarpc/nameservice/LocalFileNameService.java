@@ -29,6 +29,8 @@ public class LocalFileNameService implements NameService {
 
     // 只支持文件协议
     private static final Collection<String> schemes = Collections.singleton("file");
+
+    // 对应的文件对象
     private File file;
 
 
@@ -39,8 +41,11 @@ public class LocalFileNameService implements NameService {
 
     @Override
     public void connect(URI nameServiceUri) {
+
+        // 连接到注册中心，本实现中只需要打开文件即可
         if (schemes.contains(nameServiceUri.getScheme())) {
             file = new File(nameServiceUri);
+
         } else {
             throw new RuntimeException("Unsupported scheme!");
         }
@@ -49,35 +54,48 @@ public class LocalFileNameService implements NameService {
     @Override
     public synchronized void registerService(String serviceName, URI uri) throws IOException {
         log.info("Register service: {}, uri: {}.", serviceName, uri);
+
+        // 基于nio读写文件系统
         try (RandomAccessFile raf = new RandomAccessFile(file, "rw");
              FileChannel fileChannel = raf.getChannel()) {
+
+            // 加文件锁防止并发问题
             FileLock lock = fileChannel.lock();
+
+            // 读写文件，修改metadata对象及文件
             try {
                 int fileLength = (int) raf.length();
                 Metadata metadata;
                 byte[] bytes;
+
                 if (fileLength > 0) {
                     bytes = new byte[(int) raf.length()];
                     ByteBuffer buffer = ByteBuffer.wrap(bytes);
+
                     while (buffer.hasRemaining()) {
                         fileChannel.read(buffer);
                     }
-
                     metadata = SerializeSupport.parse(bytes);
+
                 } else {
                     metadata = new Metadata();
                 }
+
+                // 添加这个服务，也即全类名
                 List<URI> uris = metadata.computeIfAbsent(serviceName, k -> new ArrayList<>());
                 if (!uris.contains(uri)) {
                     uris.add(uri);
                 }
-                log.info(metadata.toString());
 
+                log.info(metadata.toString());
                 bytes = SerializeSupport.serialize(metadata);
+
+                // 重写文件元数据
                 fileChannel.truncate(bytes.length);
                 fileChannel.position(0L);
                 fileChannel.write(ByteBuffer.wrap(bytes));
                 fileChannel.force(true);
+
             } finally {
                 lock.release();
             }
@@ -87,25 +105,36 @@ public class LocalFileNameService implements NameService {
     @Override
     public URI lookupService(String serviceName) throws IOException {
         Metadata metadata;
+
+        // 基于nio读写文件系统
         try (RandomAccessFile raf = new RandomAccessFile(file, "rw");
              FileChannel fileChannel = raf.getChannel()) {
+
+            // 加文件锁防止并发问题
             FileLock lock = fileChannel.lock();
+
+            // 读取文件，构造metadata对象
             try {
                 byte[] bytes = new byte[(int) raf.length()];
                 ByteBuffer buffer = ByteBuffer.wrap(bytes);
+
                 while (buffer.hasRemaining()) {
                     fileChannel.read(buffer);
                 }
+
                 metadata = bytes.length == 0 ? new Metadata() : SerializeSupport.parse(bytes);
                 log.info(metadata.toString());
+
             } finally {
                 lock.release();
             }
         }
 
+        // 从元数据中获取服务
         List<URI> uris = metadata.get(serviceName);
-        if (null == uris || uris.isEmpty()) {
+        if (uris == null || uris.isEmpty()) {
             return null;
+
         } else {
             return uris.get(ThreadLocalRandom.current().nextInt(uris.size()));
         }

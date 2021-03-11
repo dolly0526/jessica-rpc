@@ -42,6 +42,10 @@ public class JessicaRpcServerDemo {
             // noinspection ResultOfMethodCallIgnored
             System.in.read();
             log.info("Bye!");
+
+        } finally {
+            file.delete();
+            log.info("成功删除文件，已退出...");
         }
     }
 }

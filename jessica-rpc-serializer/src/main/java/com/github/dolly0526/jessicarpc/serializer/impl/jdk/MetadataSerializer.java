@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 操作文件系统，这个类有点硬核...
+ *
  * Size of the map                     2 bytes
  *      Map entry:
  *          Key string:
