@@ -10,6 +10,8 @@ import io.netty.handler.codec.ByteToMessageDecoder;
 import java.util.List;
 
 /**
+ * 通用的消息解码器，和自定义的协议绑定，已经处理了粘包半包问题
+ *
  * @author yusenyang
  * @create 2021/3/9 11:45
  */
@@ -33,7 +35,7 @@ public abstract class CommandDecoder extends ByteToMessageDecoder {
             return;
         }
 
-        // 解码消息头部
+        // 解码消息头部，根据请求和响应分别解出不同的头部
         Header header = decodeHeader(channelHandlerContext, byteBuf);
 
         // 读取完头部，计算消息内容的长度

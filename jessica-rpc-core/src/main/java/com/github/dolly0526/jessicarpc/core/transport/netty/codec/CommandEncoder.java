@@ -7,6 +7,8 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
 
 /**
+ * 通用的消息编码器，和自定义的协议绑定
+ *
  * @author yusenyang
  * @create 2021/3/9 12:05
  */

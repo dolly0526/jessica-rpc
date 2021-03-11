@@ -25,16 +25,24 @@ public class RequestInvocation extends SimpleChannelInboundHandler<Command> {
 
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, Command request) throws Exception {
+
+        // 此时请求已完成解码，根据type从命令注册中心获取对应的handler
         RequestHandler handler = requestHandlerRegistry.get(request.getHeader().getType());
-        if (null != handler) {
+        if (handler != null) {
+
+            // 用handler处理请求
             Command response = handler.handle(request);
-            if (null != response) {
-                channelHandlerContext.writeAndFlush(response).addListener((ChannelFutureListener) channelFuture -> {
-                    if (!channelFuture.isSuccess()) {
-                        log.warn("Write response failed!", channelFuture.cause());
-                        channelHandlerContext.channel().close();
-                    }
-                });
+            if (response != null) {
+
+                channelHandlerContext.writeAndFlush(response)
+                        .addListener((ChannelFutureListener) channelFuture -> {
+
+                            // 注意处理发送失败的情况
+                            if (!channelFuture.isSuccess()) {
+                                log.warn("Write response failed!", channelFuture.cause());
+                                channelHandlerContext.channel().close();
+                            }
+                        });
             } else {
                 log.warn("Response is null!");
             }

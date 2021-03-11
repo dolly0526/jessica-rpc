@@ -2,7 +2,7 @@ package com.github.dolly0526.jessicarpc.sample.server;
 
 import com.github.dolly0526.jessicarpc.api.NameService;
 import com.github.dolly0526.jessicarpc.api.RpcAccessPoint;
-import com.github.dolly0526.jessicarpc.api.spi.ServiceSupport;
+import com.github.dolly0526.jessicarpc.common.support.ServiceSpiSupport;
 import com.github.dolly0526.jessicarpc.sample.api.HelloService;
 import com.github.dolly0526.jessicarpc.sample.api.impl.HelloServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +26,7 @@ public class SimpleRpcServerDemo {
         HelloService helloService = new HelloServiceImpl();
         log.info("创建并启动RpcAccessPoint...");
 
-        try (RpcAccessPoint rpcAccessPoint = ServiceSupport.load(RpcAccessPoint.class);
+        try (RpcAccessPoint rpcAccessPoint = ServiceSpiSupport.load(RpcAccessPoint.class);
              Closeable ignored = rpcAccessPoint.startServer()) {
 
             NameService nameService = rpcAccessPoint.getNameService(file.toURI());

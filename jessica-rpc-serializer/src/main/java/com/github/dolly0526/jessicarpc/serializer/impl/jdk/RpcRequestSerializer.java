@@ -1,5 +1,6 @@
 package com.github.dolly0526.jessicarpc.serializer.impl.jdk;
 
+import com.github.dolly0526.jessicarpc.common.annotation.Singleton;
 import com.github.dolly0526.jessicarpc.common.constant.JessicaRpcConst;
 import com.github.dolly0526.jessicarpc.serializer.Serializer;
 import com.github.dolly0526.jessicarpc.common.model.RpcRequest;
@@ -13,6 +14,7 @@ import java.nio.ByteBuffer;
  * @author yusenyang
  * @create 2021/3/9 19:19
  */
+@Singleton
 public class RpcRequestSerializer implements Serializer<RpcRequest> {
 
     @Override

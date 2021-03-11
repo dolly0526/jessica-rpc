@@ -2,8 +2,9 @@ package com.github.dolly0526.jessicarpc.sample.client;
 
 import com.github.dolly0526.jessicarpc.api.NameService;
 import com.github.dolly0526.jessicarpc.api.RpcAccessPoint;
-import com.github.dolly0526.jessicarpc.api.spi.ServiceSupport;
+import com.github.dolly0526.jessicarpc.common.support.ServiceSpiSupport;
 import com.github.dolly0526.jessicarpc.sample.api.HelloService;
+import com.github.dolly0526.jessicarpc.sample.api.model.HelloRequest;
 import com.github.dolly0526.jessicarpc.sample.api.model.HelloResult;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,7 +26,7 @@ public class SimpleRpcClientDemo {
         File file = new File(tmpDirFile, "jessica_rpc_name_service.data");
         String name = "Master MQ";
 
-        try (RpcAccessPoint rpcAccessPoint = ServiceSupport.load(RpcAccessPoint.class)) {
+        try (RpcAccessPoint rpcAccessPoint = ServiceSpiSupport.load(RpcAccessPoint.class)) {
 
             NameService nameService = rpcAccessPoint.getNameService(file.toURI());
             assert nameService != null;
@@ -37,11 +38,14 @@ public class SimpleRpcClientDemo {
             HelloService helloService = rpcAccessPoint.getRemoteService(uri, HelloService.class);
             log.info("请求服务, name: {}...", name);
 
-//            String response1 = helloService.hello(name);
-//            log.error("收到响应: {}.", response1);
+            String response1 = helloService.hello(name);
+            log.error("收到响应: {}.", response1);
 
-            HelloResult response2 = helloService.helloMoreResult(name, "你好");
+            HelloResult response2 = helloService.helloMoreResult(name, 99999L);
             log.error("收到响应: {}.", response2);
+
+            HelloResult response3 = helloService.helloMoreResult(new HelloRequest(123, "123456"));
+            log.error("收到响应: {}.", response3);
         }
     }
 }

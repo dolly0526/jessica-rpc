@@ -1,5 +1,6 @@
 package com.github.dolly0526.jessicarpc.serializer.impl.jdk;
 
+import com.github.dolly0526.jessicarpc.common.annotation.Singleton;
 import com.github.dolly0526.jessicarpc.common.constant.JessicaRpcConst;
 import com.github.dolly0526.jessicarpc.serializer.Serializer;
 import com.github.dolly0526.jessicarpc.common.model.Metadata;
@@ -30,6 +31,7 @@ import java.util.Map;
  * @author yusenyang
  * @create 2021/3/9 11:11
  */
+@Singleton
 public class MetadataSerializer implements Serializer<Metadata> {
 
     @Override

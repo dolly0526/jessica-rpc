@@ -1,6 +1,7 @@
 package com.github.dolly0526.jessicarpc.nameservice;
 
 import com.github.dolly0526.jessicarpc.api.NameService;
+import com.github.dolly0526.jessicarpc.common.annotation.Singleton;
 import com.github.dolly0526.jessicarpc.common.model.Metadata;
 import com.github.dolly0526.jessicarpc.serializer.SerializeSupport;
 import org.slf4j.Logger;
@@ -23,6 +24,7 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author yusenyang
  * @create 2021/3/9 17:36
  */
+@Singleton
 public class LocalFileNameService implements NameService {
     private static final Logger logger = LoggerFactory.getLogger(LocalFileNameService.class);
     private static final Collection<String> schemes = Collections.singleton("file");

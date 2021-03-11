@@ -1,5 +1,6 @@
 package com.github.dolly0526.jessicarpc.core.client.impl;
 
+import com.github.dolly0526.jessicarpc.common.annotation.Singleton;
 import com.github.dolly0526.jessicarpc.core.client.StubFactory;
 import com.github.dolly0526.jessicarpc.core.client.stub.CglibDynamicStub;
 import com.github.dolly0526.jessicarpc.core.transport.Transport;
@@ -11,6 +12,7 @@ import org.springframework.cglib.proxy.Enhancer;
  * @author yusenyang
  * @create 2021/3/10 20:31
  */
+@Singleton
 public class CglibStubFactory implements StubFactory {
 
     @Override

@@ -11,7 +11,7 @@ public interface HelloService {
 
     String hello(String name);
 
-    HelloResult helloMoreResult(String name, String value);
+    HelloResult helloMoreResult(String name, Long value);
 
     HelloResult helloMoreResult(HelloRequest request);
 }

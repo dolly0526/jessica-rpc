@@ -31,7 +31,7 @@ public class ResponseInvocation extends SimpleChannelInboundHandler<Command> {
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, Command response) {
 
-        // 此时响应发回了，从requestPendingCenter中删掉对应的对象，把结果塞给该future对象供业务使用
+        // 此时响应已完成解码，从requestPendingCenter中删掉对应的对象，把结果塞给该future对象供业务使用
         ResponseFuture future = responsePendingCenter.remove(response.getHeader().getRequestId());
 
         if (future != null) {

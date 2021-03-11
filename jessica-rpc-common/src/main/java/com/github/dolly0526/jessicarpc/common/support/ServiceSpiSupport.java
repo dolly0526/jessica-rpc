@@ -1,4 +1,6 @@
-package com.github.dolly0526.jessicarpc.api.spi;
+package com.github.dolly0526.jessicarpc.common.support;
+
+import com.github.dolly0526.jessicarpc.common.annotation.Singleton;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -13,20 +15,21 @@ import java.util.stream.StreamSupport;
  * @author yusenyang
  * @create 2021/3/9 11:07
  */
-public class ServiceSupport {
+public class ServiceSpiSupport {
     private final static Map<String, Object> singletonServices = new HashMap<>();
 
     public synchronized static <S> S load(Class<S> service) {
-        return StreamSupport.
-                stream(ServiceLoader.load(service).spliterator(), false)
-                .map(ServiceSupport::singletonFilter)
-                .findFirst().orElseThrow(ServiceLoadException::new);
+        return StreamSupport
+                .stream(ServiceLoader.load(service).spliterator(), false)
+                .map(ServiceSpiSupport::singletonFilter)
+                .findFirst()
+                .orElseThrow(RuntimeException::new);
     }
 
     public synchronized static <S> Collection<S> loadAll(Class<S> service) {
-        return StreamSupport.
-                stream(ServiceLoader.load(service).spliterator(), false)
-                .map(ServiceSupport::singletonFilter).collect(Collectors.toList());
+        return StreamSupport
+                .stream(ServiceLoader.load(service).spliterator(), false)
+                .map(ServiceSpiSupport::singletonFilter).collect(Collectors.toList());
     }
 
     @SuppressWarnings("unchecked")

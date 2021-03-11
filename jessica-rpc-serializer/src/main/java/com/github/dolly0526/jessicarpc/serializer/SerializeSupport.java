@@ -1,6 +1,7 @@
 package com.github.dolly0526.jessicarpc.serializer;
 
-import com.github.dolly0526.jessicarpc.api.spi.ServiceSupport;
+import com.github.dolly0526.jessicarpc.common.annotation.Singleton;
+import com.github.dolly0526.jessicarpc.common.support.ServiceSpiSupport;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
@@ -13,6 +14,7 @@ import java.util.Map;
  * @create 2021/3/8 18:14
  */
 @Slf4j
+@Singleton
 public class SerializeSupport {
 
     private static Map<Class<?>/*序列化对象类型*/, Serializer<?>/*序列化实现*/> serializerMap = new HashMap<>();
@@ -23,7 +25,7 @@ public class SerializeSupport {
      * 类加载时初始化两个map，实现ioc
      */
     static {
-        for (Serializer<?> serializer : ServiceSupport.loadAll(Serializer.class)) {
+        for (Serializer<?> serializer : ServiceSpiSupport.loadAll(Serializer.class)) {
 
             byte serializeType = serializer.getSerializeType();
             Class<?> serializeClass = serializer.getSerializeClass();

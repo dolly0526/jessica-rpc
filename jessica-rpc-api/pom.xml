@@ -12,6 +12,16 @@
 
     <artifactId>jessica-rpc-api</artifactId>
 
+    <dependencies>
+        <!-- JESSICA RPC START -->
+        <dependency>
+            <groupId>com.github.dolly0526</groupId>
+            <artifactId>jessica-rpc-common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!-- JESSICA RPC END -->
+    </dependencies>
+
     <build>
         <resources>
             <resource>

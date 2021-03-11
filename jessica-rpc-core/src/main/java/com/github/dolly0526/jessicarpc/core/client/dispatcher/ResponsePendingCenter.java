@@ -1,5 +1,7 @@
 package com.github.dolly0526.jessicarpc.core.client.dispatcher;
 
+import com.github.dolly0526.jessicarpc.common.annotation.Singleton;
+
 import java.io.Closeable;
 import java.util.Map;
 import java.util.concurrent.*;
@@ -10,6 +12,7 @@ import java.util.concurrent.*;
  * @author yusenyang
  * @create 2021/3/8 20:33
  */
+@Singleton
 public class ResponsePendingCenter implements Closeable {
 
     // 依靠信号量实现背压机制，限制请求并发量

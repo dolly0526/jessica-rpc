@@ -1,7 +1,12 @@
 package com.github.dolly0526.jessicarpc.sample.api.model;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 
+@NoArgsConstructor
+@AllArgsConstructor
 public class HelloRequest implements Serializable {
 
     private Object param;

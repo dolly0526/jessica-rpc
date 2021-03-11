@@ -1,6 +1,6 @@
 package com.github.dolly0526.jessicarpc.api;
 
-import com.github.dolly0526.jessicarpc.api.spi.ServiceSupport;
+import com.github.dolly0526.jessicarpc.common.support.ServiceSpiSupport;
 
 import java.io.Closeable;
 import java.net.URI;
@@ -41,7 +41,7 @@ public interface RpcAccessPoint extends Closeable {
      * @return 注册中心引用
      */
     default NameService getNameService(URI nameServiceUri) {
-        Collection<NameService> nameServices = ServiceSupport.loadAll(NameService.class);
+        Collection<NameService> nameServices = ServiceSpiSupport.loadAll(NameService.class);
 
         for (NameService nameService : nameServices) {
             if (nameService.supportedSchemes().contains(nameServiceUri.getScheme())) {
@@ -49,7 +49,6 @@ public interface RpcAccessPoint extends Closeable {
                 return nameService;
             }
         }
-
         return null;
     }
 

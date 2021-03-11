@@ -5,6 +5,8 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 
 /**
+ * 特殊编码请求头部
+ *
  * @author yusenyang
  * @create 2021/3/9 12:06
  */

@@ -1,5 +1,6 @@
 package com.github.dolly0526.jessicarpc.core.transport.netty;
 
+import com.github.dolly0526.jessicarpc.common.annotation.Singleton;
 import com.github.dolly0526.jessicarpc.core.transport.Transport;
 import com.github.dolly0526.jessicarpc.core.transport.TransportClient;
 import com.github.dolly0526.jessicarpc.core.client.dispatcher.ResponsePendingCenter;
@@ -26,6 +27,7 @@ import java.util.concurrent.TimeoutException;
  * @author yusenyang
  * @create 2021/3/9 19:03
  */
+@Singleton
 public class NettyClient implements TransportClient {
 
     // netty客户端必备的一些对象

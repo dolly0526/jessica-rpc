@@ -1,7 +1,7 @@
 package com.github.dolly0526.jessicarpc.core.client.stub;
 
 import com.github.dolly0526.jessicarpc.core.client.ServiceType;
-import com.github.dolly0526.jessicarpc.common.util.RequestIdSupport;
+import com.github.dolly0526.jessicarpc.common.support.RequestIdSupport;
 import com.github.dolly0526.jessicarpc.core.client.ServiceStub;
 import com.github.dolly0526.jessicarpc.serializer.SerializeSupport;
 import com.github.dolly0526.jessicarpc.core.transport.Transport;
@@ -28,7 +28,7 @@ public abstract class AbstractServiceStub implements ServiceStub {
      */
     protected byte[] invokeRemote(RpcRequest request) {
 
-        // 根据协议构造请求头
+        // 根据协议构造请求头，注意类型
         Header header = new Header(ServiceType.TYPE_RPC_REQUEST, 1, RequestIdSupport.next());
 
         // 根据协议处理请求内容

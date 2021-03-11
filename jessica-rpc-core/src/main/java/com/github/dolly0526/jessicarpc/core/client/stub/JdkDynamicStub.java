@@ -34,7 +34,6 @@ public class JdkDynamicStub<T> extends AbstractServiceStub implements Invocation
         byte[] bytes = invokeRemote(rpcRequest);
 
         // 反序列化后返回，注意此处需要填充类型
-        // TODO 基本类型、包装类、void等怎么处理？
         return SerializeSupport.parse(bytes, method.getReturnType());
     }
 }

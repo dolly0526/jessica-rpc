@@ -1,5 +1,6 @@
 package com.github.dolly0526.jessicarpc.core.transport.netty;
 
+import com.github.dolly0526.jessicarpc.common.annotation.Singleton;
 import com.github.dolly0526.jessicarpc.core.server.RequestHandlerRegistry;
 import com.github.dolly0526.jessicarpc.core.transport.TransportServer;
 import com.github.dolly0526.jessicarpc.core.transport.netty.codec.RequestDecoder;
@@ -20,6 +21,7 @@ import org.slf4j.LoggerFactory;
  * @author yusenyang
  * @create 2021/3/9 19:02
  */
+@Singleton
 public class NettyServer implements TransportServer {
     private static final Logger logger = LoggerFactory.getLogger(NettyServer.class);
     private int port;

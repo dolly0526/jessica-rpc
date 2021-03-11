@@ -6,7 +6,7 @@ import com.github.dolly0526.jessicarpc.core.transport.Transport;
 import com.github.dolly0526.jessicarpc.core.transport.TransportClient;
 import com.github.dolly0526.jessicarpc.core.transport.TransportServer;
 import com.github.dolly0526.jessicarpc.api.RpcAccessPoint;
-import com.github.dolly0526.jessicarpc.api.spi.ServiceSupport;
+import com.github.dolly0526.jessicarpc.common.support.ServiceSpiSupport;
 import com.github.dolly0526.jessicarpc.core.client.StubFactory;
 
 import java.io.Closeable;
@@ -26,10 +26,10 @@ public class NettyRpcAccessPoint implements RpcAccessPoint {
     private final int port = 9999;
     private final URI uri = URI.create("rpc://" + host + ":" + port);
     private TransportServer server = null;
-    private TransportClient client = ServiceSupport.load(TransportClient.class);
+    private TransportClient client = ServiceSpiSupport.load(TransportClient.class);
     private final Map<URI, Transport> clientMap = new ConcurrentHashMap<>();
-    private final StubFactory stubFactory = ServiceSupport.load(StubFactory.class);
-    private final ServiceProviderRegistry serviceProviderRegistry = ServiceSupport.load(ServiceProviderRegistry.class);
+    private final StubFactory stubFactory = ServiceSpiSupport.load(StubFactory.class);
+    private final ServiceProviderRegistry serviceProviderRegistry = ServiceSpiSupport.load(ServiceProviderRegistry.class);
 
 
     @Override
@@ -57,7 +57,7 @@ public class NettyRpcAccessPoint implements RpcAccessPoint {
     @Override
     public synchronized Closeable startServer() throws Exception {
         if (null == server) {
-            server = ServiceSupport.load(TransportServer.class);
+            server = ServiceSpiSupport.load(TransportServer.class);
             server.start(RequestHandlerRegistry.getInstance(), port);
 
         }

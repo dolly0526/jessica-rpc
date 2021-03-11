@@ -1,6 +1,7 @@
 package com.github.dolly0526.jessicarpc.serializer.impl.fastjson;
 
 import com.alibaba.fastjson.JSON;
+import com.github.dolly0526.jessicarpc.common.annotation.Singleton;
 import com.github.dolly0526.jessicarpc.common.constant.JessicaRpcConst;
 import com.github.dolly0526.jessicarpc.serializer.impl.SerializeType;
 
@@ -12,6 +13,7 @@ import java.nio.ByteBuffer;
  * @author yusenyang
  * @create 2021/3/10 15:47
  */
+@Singleton
 public class ObjectSerializer extends AbstractJsonSerializer<Object> {
 
     @Override
@@ -26,6 +28,7 @@ public class ObjectSerializer extends AbstractJsonSerializer<Object> {
         buffer.put(jsonBytes);
     }
 
+    // TODO 基本类型、包装类、void等怎么处理？
     @Override
     public <E> Object parse(byte[] bytes, int offset, int length, Class<E> eClass) {
         ByteBuffer buffer = ByteBuffer.wrap(bytes, offset, length);

@@ -1,5 +1,6 @@
 package com.github.dolly0526.jessicarpc.core.client.impl;
 
+import com.github.dolly0526.jessicarpc.common.annotation.Singleton;
 import com.github.dolly0526.jessicarpc.core.client.StubFactory;
 import com.github.dolly0526.jessicarpc.core.client.stub.JdkDynamicStub;
 import com.github.dolly0526.jessicarpc.core.transport.Transport;
@@ -12,6 +13,7 @@ import java.lang.reflect.Proxy;
  * @author yusenyang
  * @create 2021/3/10 20:37
  */
+@Singleton
 public class JdkStubFactory implements StubFactory {
 
     @Override

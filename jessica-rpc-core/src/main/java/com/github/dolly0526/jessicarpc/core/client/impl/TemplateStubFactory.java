@@ -1,5 +1,6 @@
 package com.github.dolly0526.jessicarpc.core.client.impl;
 
+import com.github.dolly0526.jessicarpc.common.annotation.Singleton;
 import com.github.dolly0526.jessicarpc.core.client.ServiceStub;
 import com.github.dolly0526.jessicarpc.core.client.StubFactory;
 import com.github.dolly0526.jessicarpc.core.transport.Transport;
@@ -13,6 +14,7 @@ import java.util.Map;
  * @author yusenyang
  * @create 2021/3/9 15:18
  */
+@Singleton
 public class TemplateStubFactory implements StubFactory {
     private final static String STUB_SOURCE_TEMPLATE =
             "package com.github.dolly0526.jessicarpc.core.client.stub;\n" +

@@ -1,5 +1,6 @@
 package com.github.dolly0526.jessicarpc.serializer.impl.jdk;
 
+import com.github.dolly0526.jessicarpc.common.annotation.Singleton;
 import com.github.dolly0526.jessicarpc.common.constant.JessicaRpcConst;
 import com.github.dolly0526.jessicarpc.serializer.Serializer;
 import com.github.dolly0526.jessicarpc.serializer.impl.SerializeType;
@@ -8,6 +9,7 @@ import com.github.dolly0526.jessicarpc.serializer.impl.SerializeType;
  * @author yusenyang
  * @create 2021/3/10 16:09
  */
+@Singleton
 public class StringSerializer implements Serializer<String> {
 
     @Override

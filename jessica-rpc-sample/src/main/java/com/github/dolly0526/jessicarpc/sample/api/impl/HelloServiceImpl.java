@@ -21,7 +21,7 @@ public class HelloServiceImpl implements HelloService {
     }
 
     @Override
-    public HelloResult helloMoreResult(String name, String value) {
+    public HelloResult helloMoreResult(String name, Long value) {
 
         log.info("HelloServiceImpl收到: {}, {}.", name, value);
         HelloResult result = new HelloResult();
@@ -40,7 +40,7 @@ public class HelloServiceImpl implements HelloService {
         HelloResult result = new HelloResult();
         result.setSuccess(true);
         result.setResult("Success");
-        result.setResultCode("1");
+        result.setResultCode("-1");
         log.info("HelloServiceImpl返回: {}.", result.toString());
         return result;
     }
