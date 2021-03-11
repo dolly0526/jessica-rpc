@@ -39,7 +39,7 @@ public class CglibServiceStub<T> extends AbstractServiceStub implements MethodIn
         byte[] bytes = invokeRemote(rpcRequest);
 
         // 反序列化后返回，注意此处需要填充类型
-        return SerializeSupport.parse(bytes, o.getClass());
+        return SerializeSupport.parse(bytes, method.getReturnType());
     }
 
     /**
