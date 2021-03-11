@@ -1,8 +1,9 @@
 package com.github.dolly0526.jessicarpc.core.client.impl;
 
 import com.github.dolly0526.jessicarpc.core.client.StubFactory;
-import com.github.dolly0526.jessicarpc.core.client.stubs.CglibServiceStub;
+import com.github.dolly0526.jessicarpc.core.client.stub.CglibDynamicStub;
 import com.github.dolly0526.jessicarpc.core.transport.Transport;
+import org.springframework.cglib.proxy.Enhancer;
 
 /**
  * 基于cglib生成代理
@@ -17,11 +18,12 @@ public class CglibStubFactory implements StubFactory {
     public <T> T createStub(Transport transport, Class<T> serviceClass) {
 
         try {
-            CglibServiceStub<T> proxy = new CglibServiceStub<>(serviceClass);
-            proxy.setTransport(transport);
+            // 通过字节码技术动态创建子类实例
+            CglibDynamicStub<T> stub = new CglibDynamicStub<>(serviceClass);
+            stub.setTransport(transport);
 
             // 返回这个桩
-            return (T) proxy.getProxy();
+            return (T) Enhancer.create(serviceClass, stub);
 
         } catch (Throwable t) {
             throw new RuntimeException(t);

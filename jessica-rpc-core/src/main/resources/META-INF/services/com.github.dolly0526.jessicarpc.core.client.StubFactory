@@ -1,1 +1,1 @@
-com.github.dolly0526.jessicarpc.core.client.impl.CglibStubFactory
+com.github.dolly0526.jessicarpc.core.client.impl.JdkStubFactory

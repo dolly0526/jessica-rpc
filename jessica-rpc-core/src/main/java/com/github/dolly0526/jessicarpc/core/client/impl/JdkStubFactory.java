@@ -1,7 +1,10 @@
 package com.github.dolly0526.jessicarpc.core.client.impl;
 
 import com.github.dolly0526.jessicarpc.core.client.StubFactory;
+import com.github.dolly0526.jessicarpc.core.client.stub.JdkDynamicStub;
 import com.github.dolly0526.jessicarpc.core.transport.Transport;
+
+import java.lang.reflect.Proxy;
 
 /**
  * @author yusenyang
@@ -10,7 +13,19 @@ import com.github.dolly0526.jessicarpc.core.transport.Transport;
 public class JdkStubFactory implements StubFactory {
 
     @Override
+    @SuppressWarnings("unchecked")
     public <T> T createStub(Transport transport, Class<T> serviceClass) {
-        return null;
+
+        try {
+            // 通过jdk原生代理动态创建子类实例
+            JdkDynamicStub<T> stub = new JdkDynamicStub<>(serviceClass);
+            stub.setTransport(transport);
+
+            // 返回这个桩
+            return (T) Proxy.newProxyInstance(serviceClass.getClassLoader(), new Class[]{serviceClass}, stub);
+
+        } catch (Throwable t) {
+            throw new RuntimeException(t);
+        }
     }
 }

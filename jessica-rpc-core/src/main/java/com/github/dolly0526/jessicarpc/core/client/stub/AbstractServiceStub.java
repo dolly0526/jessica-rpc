@@ -1,4 +1,4 @@
-package com.github.dolly0526.jessicarpc.core.client.stubs;
+package com.github.dolly0526.jessicarpc.core.client.stub;
 
 import com.github.dolly0526.jessicarpc.core.client.ServiceType;
 import com.github.dolly0526.jessicarpc.common.util.RequestIdSupport;
@@ -24,7 +24,7 @@ public abstract class AbstractServiceStub implements ServiceStub {
 
 
     /**
-     * 和invoke类似的方法，代理对象调用远端的服务
+     * 和invoke类似的方法，先行封装一个通信对象，代理对象再通过该方法调用远端的服务
      */
     protected byte[] invokeRemote(RpcRequest request) {
 

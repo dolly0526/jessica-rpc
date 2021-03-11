@@ -1,2 +1,2 @@
 # Jessica-RPC
-A simple RPC framework based on Netty.
+A simple demo RPC framework based on Netty.

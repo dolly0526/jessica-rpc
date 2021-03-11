@@ -1,4 +1,4 @@
-package com.github.dolly0526.jessicarpc.core.client.stubs;
+package com.github.dolly0526.jessicarpc.core.client.stub;
 
 import com.github.dolly0526.jessicarpc.common.model.RpcRequest;
 import com.github.dolly0526.jessicarpc.serializer.SerializeSupport;
@@ -12,17 +12,17 @@ import java.lang.reflect.Method;
  * @author yusenyang
  * @create 2021/3/10 20:46
  */
-public class CglibServiceStub<T> extends AbstractServiceStub implements MethodInterceptor {
+public class CglibDynamicStub<T> extends AbstractServiceStub implements MethodInterceptor {
 
     // 被代理的接口
-    private Class<T> target;
+    private Class<T> serviceClass;
 
     // cglib的方法，拦截被代理对象的所有方法
     private Enhancer enhancer = new Enhancer();
 
 
-    public CglibServiceStub(Class<T> aClass) {
-        this.target = aClass;
+    public CglibDynamicStub(Class<T> serviceClass) {
+        this.serviceClass = serviceClass;
     }
 
 
@@ -31,7 +31,7 @@ public class CglibServiceStub<T> extends AbstractServiceStub implements MethodIn
 
         // 构造request请求对象
         RpcRequest rpcRequest = new RpcRequest(
-                target.getCanonicalName(),
+                serviceClass.getCanonicalName(),
                 method.getName(),
                 SerializeSupport.serialize(objects));
 
@@ -39,21 +39,7 @@ public class CglibServiceStub<T> extends AbstractServiceStub implements MethodIn
         byte[] bytes = invokeRemote(rpcRequest);
 
         // 反序列化后返回，注意此处需要填充类型
+        // TODO 基本类型、包装类、void等怎么处理？
         return SerializeSupport.parse(bytes, method.getReturnType());
-    }
-
-    /**
-     * 获取代理对象
-     *
-     * @return
-     */
-    public Object getProxy(){
-
-        // 设置需要创建子类的类
-        enhancer.setSuperclass(target);
-        enhancer.setCallback(this);
-
-        // 通过字节码技术动态创建子类实例
-        return enhancer.create();
     }
 }
