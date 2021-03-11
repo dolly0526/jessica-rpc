@@ -27,7 +27,7 @@ import java.util.concurrent.ThreadLocalRandom;
 @Singleton
 public class LocalFileNameService implements NameService {
 
-    // 只支持文件协议
+    // 只支持本地文件
     private static final Collection<String> schemes = Collections.singleton("file");
 
     // 对应的文件对象

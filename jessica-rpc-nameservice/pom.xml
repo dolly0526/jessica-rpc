@@ -13,6 +13,13 @@
     <artifactId>jessica-rpc-nameservice</artifactId>
 
     <dependencies>
+        <!-- SPRINGFRAMEWORK START -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+        </dependency>
+        <!-- SPRINGFRAMEWORK END -->
+
         <!-- CURATOR START -->
         <dependency>
             <groupId>org.apache.curator</groupId>

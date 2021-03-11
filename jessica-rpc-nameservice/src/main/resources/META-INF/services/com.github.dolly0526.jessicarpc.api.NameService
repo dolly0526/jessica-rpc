@@ -1,1 +1,1 @@
-com.github.dolly0526.jessicarpc.nameservice.LocalFileNameService
+com.github.dolly0526.jessicarpc.nameservice.MysqlNameService
