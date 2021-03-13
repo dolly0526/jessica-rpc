@@ -3,6 +3,7 @@ package com.github.dolly0526.jessicarpc.nameservice;
 import com.github.dolly0526.jessicarpc.api.NameService;
 import com.github.dolly0526.jessicarpc.common.annotation.Singleton;
 import com.github.dolly0526.jessicarpc.common.model.Metadata;
+import com.github.dolly0526.jessicarpc.loadbalance.LoadBalanceSupport;
 import com.github.dolly0526.jessicarpc.serializer.SerializeSupport;
 import lombok.extern.slf4j.Slf4j;
 
@@ -17,7 +18,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * @author yusenyang
@@ -136,7 +136,7 @@ public class LocalFileNameService implements NameService {
             return null;
 
         } else {
-            return uris.get(ThreadLocalRandom.current().nextInt(uris.size()));
+            return LoadBalanceSupport.route(uris);
         }
     }
 }

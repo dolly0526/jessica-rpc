@@ -39,13 +39,13 @@ public class JessicaRpcClientDemo {
             log.info("请求服务, name: {}...", name);
 
             String response1 = helloService.hello(name);
-            log.error("收到响应: {}.", response1);
+            log.info("收到响应: {}.", response1);
 
             HelloResult response2 = helloService.helloMoreResult(name, 99999L);
-            log.error("收到响应: {}.", response2);
+            log.info("收到响应: {}.", response2);
 
             HelloResult response3 = helloService.helloMoreResult(new HelloRequest(123, "123456"));
-            log.error("收到响应: {}.", response3);
+            log.info("收到响应: {}.", response3);
         }
     }
 }

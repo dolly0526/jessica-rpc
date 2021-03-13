@@ -19,6 +19,7 @@
         <module>jessica-rpc-api</module>
         <module>jessica-rpc-serializer</module>
         <module>jessica-rpc-nameservice</module>
+        <module>jessica-rpc-loadbalance</module>
     </modules>
 
     <properties>

@@ -2,6 +2,7 @@ package com.github.dolly0526.jessicarpc.nameservice;
 
 import com.github.dolly0526.jessicarpc.api.NameService;
 import com.github.dolly0526.jessicarpc.common.annotation.Singleton;
+import com.github.dolly0526.jessicarpc.loadbalance.LoadBalanceSupport;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -9,10 +10,7 @@ import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 
 import java.io.IOException;
 import java.net.URI;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author yusenyang
@@ -22,8 +20,8 @@ import java.util.Map;
 @Singleton
 public class MysqlNameService implements NameService {
 
-    // 只支持mysql TODO 暂时用file替代，不想改测试用例了。。
-    private static final Collection<String> schemes = Collections.singleton("file");
+    // 只支持mysql
+    private static final Collection<String> schemes = Collections.singleton("mysql");
 
     // 操作数据库
     private JdbcTemplate jdbcTemplate;
@@ -56,31 +54,39 @@ public class MysqlNameService implements NameService {
     @Override
     public void registerService(String serviceName, URI uri) throws IOException {
 
-        // 判断是否存在该服务
-        String sql = "SELECT * FROM vvms.t_name_service WHERE service_name = ? AND status = 1 LIMIT 1";
-        List<Map<String, Object>> existService = jdbcTemplate.queryForList(sql, serviceName);
+        // 判断是否存在该服务，服务名和uri都应该满足条件
+        String sql = "SELECT * FROM vvms.t_name_service WHERE service_name = ? AND uri = ?";
+        String uriStr = uri.toString();
+        List<Map<String, Object>> services = jdbcTemplate.queryForList(sql, serviceName, uriStr);
 
         // 如果不存在，则新增
-        if (existService.size() < 1) {
+        if (services.size() == 0) {
             sql = "INSERT INTO vvms.t_name_service (service_name, uri) VALUES (?, ?)";
-            jdbcTemplate.update(sql, serviceName, uri.toString());
+            jdbcTemplate.update(sql, serviceName, uriStr);
+            log.info("新增服务: {}, URI: {}...", serviceName, uriStr);
 
         } else {
-            sql = "UPDATE vvms.t_name_service SET status = 1 WHERE service_name = ?";
-            jdbcTemplate.update(sql, serviceName);
+            sql = "UPDATE vvms.t_name_service SET status = 1 WHERE service_name = ? AND uri = ?";
+            jdbcTemplate.update(sql, serviceName, uriStr);
+            log.info("重启服务: {}, URI: {}...", serviceName, uriStr);
         }
     }
 
     @Override
     public URI lookupService(String serviceName) throws IOException {
 
-        // TODO 此处可以做负载均衡，先简单处理
-        String sql = "SELECT * FROM vvms.t_name_service WHERE service_name = ? AND status = 1 LIMIT 1";
-        List<Map<String, Object>> existService = jdbcTemplate.queryForList(sql, serviceName);
+        // 查询所有服务
+        String sql = "SELECT * FROM vvms.t_name_service WHERE service_name = ? AND status = 1";
+        List<Map<String, Object>> services = jdbcTemplate.queryForList(sql, serviceName);
 
-        // 如果不存在，需要返回null
-        if (existService.size() > 0) {
-            return URI.create(String.valueOf(existService.get(0).get("uri")));
+        // 获取某个服务
+        List<URI> uri = new ArrayList<URI>(services.size()) {{
+            services.forEach(service -> add(URI.create(String.valueOf(service.get("uri")))));
+        }};
+
+        // 此处实现负载均衡；如果不存在，需要返回null
+        if (!services.isEmpty()) {
+            return LoadBalanceSupport.route(uri);
 
         } else {
             return null;
