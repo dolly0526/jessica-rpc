@@ -26,5 +26,5 @@ jessica-rpc-sample | 测试用例，模拟本地RPC
 - 抽象出注册中心的接口`NameService`，可以扩展多种注册中心，只要维护一个大Map任何存储介质都可以使用，目前支持本地文件和MySQL两种，默认使用JDK的File接口作为注册中心，代码见[此处](https://github.com/dolly0526/jessica-rpc/tree/main/jessica-rpc-nameservice/src/main/java/com/github/dolly0526/jessicarpc/nameservice)
 - 实现了简单的负载均衡，支持round-robin、random两种策略，默认使用random策略，也可以继承`RouteStrategy`类进行扩展，代码见[此处](https://github.com/dolly0526/jessica-rpc/tree/main/jessica-rpc-nameservice/src/main/java/com/github/dolly0526/jessicarpc/nameservice/loadbalance)
 - **TODO**项，可以再设计两个注解，实现更优雅的动态代理和服务注册，目前要实现需要依赖Spring的IOC和AOP，全局扫描某些注解再注册一个BeanPostProcessor处理这些注解；后续看了Dubbo的实现后再实现这部分
-- 测试用例在`jessica-rpc-sample`包，代码见[此处](https://github.com/dolly0526/jessica-rpc/tree/main/jessica-rpc-sample)
+- 测试用例在`jessica-rpc-sample`包，注意先启动Server再启动Client，代码见[此处](https://github.com/dolly0526/jessica-rpc/tree/main/jessica-rpc-sample)
 
