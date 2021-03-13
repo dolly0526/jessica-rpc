@@ -54,11 +54,6 @@
             <artifactId>jessica-rpc-serializer</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.github.dolly0526</groupId>
-            <artifactId>jessica-rpc-loadbalance</artifactId>
-            <version>${project.version}</version>
-        </dependency>
         <!-- JESSICA RPC END -->
     </dependencies>
 

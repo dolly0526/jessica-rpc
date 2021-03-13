@@ -1,4 +1,4 @@
-package com.github.dolly0526.jessicarpc.loadbalance;
+package com.github.dolly0526.jessicarpc.nameservice.loadbalance;
 
 import java.net.URI;
 import java.util.List;

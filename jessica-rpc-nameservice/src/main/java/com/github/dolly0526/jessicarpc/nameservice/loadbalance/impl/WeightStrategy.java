@@ -1,7 +1,7 @@
-package com.github.dolly0526.jessicarpc.loadbalance.impl;
+package com.github.dolly0526.jessicarpc.nameservice.loadbalance.impl;
 
 import com.github.dolly0526.jessicarpc.common.annotation.Singleton;
-import com.github.dolly0526.jessicarpc.loadbalance.RouteStrategy;
+import com.github.dolly0526.jessicarpc.nameservice.loadbalance.RouteStrategy;
 
 import java.net.URI;
 import java.util.List;

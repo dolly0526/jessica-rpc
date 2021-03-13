@@ -3,7 +3,7 @@ package com.github.dolly0526.jessicarpc.nameservice;
 import com.github.dolly0526.jessicarpc.api.NameService;
 import com.github.dolly0526.jessicarpc.common.annotation.Singleton;
 import com.github.dolly0526.jessicarpc.common.model.Metadata;
-import com.github.dolly0526.jessicarpc.loadbalance.LoadBalanceSupport;
+import com.github.dolly0526.jessicarpc.nameservice.loadbalance.LoadBalanceSupport;
 import com.github.dolly0526.jessicarpc.serializer.SerializeSupport;
 import lombok.extern.slf4j.Slf4j;
 

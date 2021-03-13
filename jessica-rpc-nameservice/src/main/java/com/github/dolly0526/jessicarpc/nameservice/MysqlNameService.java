@@ -2,7 +2,7 @@ package com.github.dolly0526.jessicarpc.nameservice;
 
 import com.github.dolly0526.jessicarpc.api.NameService;
 import com.github.dolly0526.jessicarpc.common.annotation.Singleton;
-import com.github.dolly0526.jessicarpc.loadbalance.LoadBalanceSupport;
+import com.github.dolly0526.jessicarpc.nameservice.loadbalance.LoadBalanceSupport;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;

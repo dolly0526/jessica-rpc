@@ -1,4 +1,4 @@
-package com.github.dolly0526.jessicarpc.loadbalance;
+package com.github.dolly0526.jessicarpc.nameservice.loadbalance;
 
 import com.github.dolly0526.jessicarpc.common.annotation.Singleton;
 import com.github.dolly0526.jessicarpc.common.support.ServiceSpiSupport;
