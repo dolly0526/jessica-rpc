@@ -7,7 +7,7 @@
     <parent>
         <artifactId>jessica-rpc</artifactId>
         <groupId>com.github.dolly0526</groupId>
-        <version>1.1-SNAPSHOT</version>
+        <version>1.2</version>
     </parent>
 
     <artifactId>jessica-rpc-api</artifactId>

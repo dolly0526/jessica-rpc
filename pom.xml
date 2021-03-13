@@ -6,7 +6,7 @@
 
     <groupId>com.github.dolly0526</groupId>
     <artifactId>jessica-rpc</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.2</version>
 
     <name>jessica-rpc</name>
     <description>A simple demo RPC framework based on Netty And JDK</description>
