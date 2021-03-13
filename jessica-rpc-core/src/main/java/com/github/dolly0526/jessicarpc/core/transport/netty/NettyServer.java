@@ -98,6 +98,7 @@ public class NettyServer implements TransportServer {
                 .group(acceptEventGroup, ioEventGroup)
                 .childHandler(channelHandler)
                 .childOption(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT)
+                // 开启长链接模式，增加连接复用能力
                 .childOption(ChannelOption.SO_KEEPALIVE, true);
 
         return serverBootstrap;
