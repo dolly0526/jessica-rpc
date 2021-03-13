@@ -97,7 +97,8 @@ public class NettyServer implements TransportServer {
         serverBootstrap.channel(Epoll.isAvailable() ? EpollServerSocketChannel.class : NioServerSocketChannel.class)
                 .group(acceptEventGroup, ioEventGroup)
                 .childHandler(channelHandler)
-                .childOption(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT);
+                .childOption(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT)
+                .childOption(ChannelOption.SO_KEEPALIVE, true);
 
         return serverBootstrap;
     }
