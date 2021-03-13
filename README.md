@@ -1,6 +1,9 @@
 # Jessica-RPC
 A simple demo RPC framework based on Netty And JDK.
 
+## 整体架构
+![RPC流程](https://tva1.sinaimg.cn/large/008eGmZEly1goi6ztcdzjj32bs0u0tqk.jpg)
+
 ## 项目结构
 
 Module | 说明
