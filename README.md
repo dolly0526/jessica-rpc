@@ -19,7 +19,7 @@ jessica-rpc-sample | 测试用例，模拟本地RPC
 
 - 自定义协议格式，包含header和payload两部分，响应继承自请求共用一套处理方式，代码见[此处](https://github.com/dolly0526/jessica-rpc/tree/main/jessica-rpc-core/src/main/java/com/github/dolly0526/jessicarpc/core/transport/protocol)
 - 传输层采用TCP协议，基于Netty框架进行网络编程，自定义编解码器解决粘包半包问题，以及对上述自定义协议进行编解码处理，代码见[此处](https://github.com/dolly0526/jessica-rpc/tree/main/jessica-rpc-core/src/main/java/com/github/dolly0526/jessicarpc/core/transport/netty)
-- 客户端使用`ResponsePendingCenter`存储所有在途的请求，实现异步的请求和响应的对应；服务端使用`RequestHandlerRegistry`实现对多种请求类型的统一接收，例如区分业务请求和心跳请求，这两处都是抽象和解耦的动作，见[此处](https://github.com/dolly0526/jessica-rpc/tree/main/jessica-rpc-core/src/main/java/com/github/dolly0526/jessicarpc/core)
+- 客户端使用`ResponsePendingCenter`存储所有在途的请求，通过`requestId`实现异步的请求和响应的对应；服务端使用`RequestHandlerRegistry`实现对多种请求类型的统一接收，例如区分业务请求和心跳请求，这两处都是抽象和解耦的动作，见[此处](https://github.com/dolly0526/jessica-rpc/tree/main/jessica-rpc-core/src/main/java/com/github/dolly0526/jessicarpc/core)
 - 基于JDK自带的SPI机制实现IOC，插件式开发耦合度低，更加易于扩展，也可以重写`ServiceSpiSupport`使用Spring的IOC容器，代码见[此处](https://github.com/dolly0526/jessica-rpc/blob/main/jessica-rpc-common/src/main/java/com/github/dolly0526/jessicarpc/common/support/ServiceSpiSupport.java)
 - 抽象出通用的`Serializer`接口，支持序列化方式的扩展，默认使用JDK序列化；基于JSON的序列化存在bug，需要处理基本类型的返回值，以及序列化方法的参数时需要带上类型，目前只能通过Fastjson底层的类型推断进行反序列化，见[此处](https://github.com/dolly0526/jessica-rpc/tree/main/jessica-rpc-serializer/src/main/java/com/github/dolly0526/jessicarpc/serializer)
 - 支持通过字符串模版动态编译、JDK、CGLib三种方式生成Stub代理类，默认使用JDK动态代理，代码见[此处](https://github.com/dolly0526/jessica-rpc/tree/main/jessica-rpc-core/src/main/java/com/github/dolly0526/jessicarpc/core/client)
