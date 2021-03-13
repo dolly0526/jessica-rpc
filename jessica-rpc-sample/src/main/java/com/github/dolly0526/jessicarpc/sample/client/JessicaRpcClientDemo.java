@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.net.URI;
 
 /**
+ * 客户端测试用例
+ *
  * @author yusenyang
  * @create 2021/3/9 19:05
  */
@@ -26,6 +28,7 @@ public class JessicaRpcClientDemo {
         File file = new File(tmpDirFile, "jessica_rpc_name_service.data");
         String name = "Master MQ";
 
+        // 所有rpc方法都封装在RpcAccessPoint包里
         try (RpcAccessPoint rpcAccessPoint = ServiceSpiSupport.load(RpcAccessPoint.class)) {
 
             NameService nameService = rpcAccessPoint.getNameService(file.toURI());

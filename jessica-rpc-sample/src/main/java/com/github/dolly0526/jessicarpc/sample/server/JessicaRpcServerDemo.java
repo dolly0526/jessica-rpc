@@ -12,6 +12,8 @@ import java.io.File;
 import java.net.URI;
 
 /**
+ * 服务端测试用例
+ *
  * @author yusenyang
  * @create 2021/3/9 19:06
  */
@@ -26,6 +28,7 @@ public class JessicaRpcServerDemo {
         HelloService helloService = new HelloServiceImpl();
         log.info("创建并启动RpcAccessPoint...");
 
+        // 所有rpc方法都封装在RpcAccessPoint包里
         try (RpcAccessPoint rpcAccessPoint = ServiceSpiSupport.load(RpcAccessPoint.class);
              Closeable ignored = rpcAccessPoint.startServer()) {
 
@@ -37,15 +40,15 @@ public class JessicaRpcServerDemo {
             log.info("服务名: {}, 向NameService注册...", serviceName);
 
             nameService.registerService(serviceName, uri);
-            log.info("开始提供服务，按任何键退出.");
+            log.info("开始提供服务，按任何键退出...");
 
             // noinspection ResultOfMethodCallIgnored
             System.in.read();
             log.info("Bye!");
 
         } finally {
-            file.delete();
-            log.info("成功删除文件，已退出...");
+            boolean delete = file.delete();
+            if (delete) log.info("成功删除文件，已退出...");
         }
     }
 }

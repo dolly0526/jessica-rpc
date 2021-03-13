@@ -24,6 +24,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Singleton
 public class NettyRpcAccessPoint implements RpcAccessPoint {
 
+    // TODO 目前仅支持本地的rpc
     private final String host = "localhost";
     private final int port = 8070;
     private final URI uri = URI.create("rpc://" + host + ":" + port);

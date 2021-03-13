@@ -24,11 +24,6 @@
         <!-- JESSICA RPC START -->
         <dependency>
             <groupId>com.github.dolly0526</groupId>
-            <artifactId>jessica-rpc-common</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.dolly0526</groupId>
             <artifactId>jessica-rpc-core</artifactId>
             <version>${project.version}</version>
         </dependency>

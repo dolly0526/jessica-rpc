@@ -20,7 +20,7 @@ import java.util.*;
 @Singleton
 public class MysqlNameService implements NameService {
 
-    // 只支持mysql
+    // 目前只支持mysql的jdbc
     private static final Collection<String> schemes = Collections.singleton("mysql");
 
     // 操作数据库
