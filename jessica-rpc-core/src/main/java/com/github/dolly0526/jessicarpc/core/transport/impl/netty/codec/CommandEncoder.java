@@ -1,5 +1,6 @@
-package com.github.dolly0526.jessicarpc.core.transport.netty.codec;
+package com.github.dolly0526.jessicarpc.core.transport.impl.netty.codec;
 
+import com.github.dolly0526.jessicarpc.common.constant.JessicaRpcConst;
 import com.github.dolly0526.jessicarpc.core.transport.protocol.Command;
 import com.github.dolly0526.jessicarpc.core.transport.protocol.Header;
 import io.netty.buffer.ByteBuf;
@@ -25,12 +26,12 @@ public abstract class CommandEncoder extends MessageToByteEncoder<Object> {
         Command command = (Command) o;
 
         // 在消息头部写出长度，多加一个4后续要减去，防止消息长度为0
-        byteBuf.writeInt(Integer.BYTES + command.getHeader().length() + command.getPayload().length);
+        byteBuf.writeInt(JessicaRpcConst.DEFAULT_LENGTH_FIELD + command.getHeader().length() + command.getPayload().length);
 
         // 写出请求头部
         encodeHeader(channelHandlerContext, command.getHeader(), byteBuf);
 
-        // 写出请求内容
+        // 写出payload内容
         byteBuf.writeBytes(command.getPayload());
     }
 

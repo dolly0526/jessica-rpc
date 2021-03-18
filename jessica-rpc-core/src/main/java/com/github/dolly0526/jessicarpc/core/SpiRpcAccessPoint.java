@@ -16,13 +16,13 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * 基于netty封装和实现的一组服务端和客户端的api
+ * 基于spi封装和实现的一组服务端和客户端的api
  *
  * @author yusenyang
  * @create 2021/3/9 19:16
  */
 @Singleton
-public class NettyRpcAccessPoint implements RpcAccessPoint {
+public class SpiRpcAccessPoint implements RpcAccessPoint {
 
     // TODO 目前仅支持本地的rpc
     private final String host = "localhost";
@@ -48,7 +48,7 @@ public class NettyRpcAccessPoint implements RpcAccessPoint {
         // 启动客户端中的通信对象，不能重复创建
         Transport transport = clientMap.computeIfAbsent(uri, key -> {
             try {
-                return client.createTransport(new InetSocketAddress(uri.getHost(), uri.getPort()), 30000L);
+                return client.createTransport(new InetSocketAddress(uri.getHost(), uri.getPort()), 30000);
 
             } catch (Exception e) {
                 throw new RuntimeException(e);

@@ -1,4 +1,4 @@
-package com.github.dolly0526.jessicarpc.core.transport.netty.handler;
+package com.github.dolly0526.jessicarpc.core.transport.impl.netty.handler;
 
 import com.github.dolly0526.jessicarpc.core.client.dispatcher.ResponsePendingCenter;
 import com.github.dolly0526.jessicarpc.core.client.dispatcher.ResponseFuture;
@@ -34,6 +34,7 @@ public class ResponseInvocation extends SimpleChannelInboundHandler<Command> {
         // 此时响应已完成解码，从requestPendingCenter中删掉对应的对象，把结果塞给该future对象供业务使用
         ResponseFuture future = responsePendingCenter.remove(response.getHeader().getRequestId());
 
+        // 此处依靠requestId将异步的请求关联到一起
         if (future != null) {
             future.getFuture().complete(response);
 

@@ -1,11 +1,11 @@
-package com.github.dolly0526.jessicarpc.core.transport.netty;
+package com.github.dolly0526.jessicarpc.core.transport.impl.netty;
 
 import com.github.dolly0526.jessicarpc.core.client.dispatcher.ResponsePendingCenter;
 import com.github.dolly0526.jessicarpc.core.transport.Transport;
 import com.github.dolly0526.jessicarpc.core.transport.TransportClient;
-import com.github.dolly0526.jessicarpc.core.transport.netty.codec.RequestEncoder;
-import com.github.dolly0526.jessicarpc.core.transport.netty.codec.ResponseDecoder;
-import com.github.dolly0526.jessicarpc.core.transport.netty.handler.ResponseInvocation;
+import com.github.dolly0526.jessicarpc.core.transport.impl.netty.handler.ResponseInvocation;
+import com.github.dolly0526.jessicarpc.core.transport.impl.netty.codec.RequestEncoder;
+import com.github.dolly0526.jessicarpc.core.transport.impl.netty.codec.ResponseDecoder;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.channel.*;
@@ -14,10 +14,12 @@ import io.netty.channel.epoll.EpollEventLoopGroup;
 import io.netty.channel.epoll.EpollSocketChannel;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.timeout.IdleStateHandler;
 
 import java.net.SocketAddress;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 /**
@@ -44,7 +46,7 @@ public class NettyClient implements TransportClient {
 
 
     @Override
-    public Transport createTransport(SocketAddress address, long connectionTimeout) throws InterruptedException, TimeoutException {
+    public Transport createTransport(SocketAddress address, int connectionTimeout) throws InterruptedException, TimeoutException {
 
         // 创建一个通道，超时抛出异常
         Channel channel = createChannel(address, connectionTimeout);
@@ -56,7 +58,7 @@ public class NettyClient implements TransportClient {
     /**
      * 创建一个通道，每一步都要注意抛异常！
      */
-    private synchronized Channel createChannel(SocketAddress address, long connectionTimeout) throws InterruptedException, TimeoutException {
+    private synchronized Channel createChannel(SocketAddress address, int connectionTimeout) throws InterruptedException, TimeoutException {
         if (address == null) {
             throw new IllegalArgumentException("address must not be null!");
         }
@@ -97,6 +99,8 @@ public class NettyClient implements TransportClient {
             @Override
             protected void initChannel(Channel channel) {
                 channel.pipeline()
+                        // 客户端开启5s写出的idle检测
+                        .addLast(new IdleStateHandler(0, 5, 90, TimeUnit.SECONDS))
                         .addLast(new ResponseDecoder())
                         .addLast(new RequestEncoder())
                         .addLast(new ResponseInvocation(responsePendingCenter));
@@ -121,6 +125,7 @@ public class NettyClient implements TransportClient {
         bootstrap.channel(Epoll.isAvailable() ? EpollSocketChannel.class : NioSocketChannel.class)
                 .group(ioEventGroup)
                 .handler(channelHandler)
+                // ByteBufAllocator.DEFAULT：大多池化、堆外
                 .option(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT);
 
         return bootstrap;

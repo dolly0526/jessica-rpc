@@ -1,4 +1,4 @@
-package com.github.dolly0526.jessicarpc.core.transport.netty.handler;
+package com.github.dolly0526.jessicarpc.core.transport.impl.netty.handler;
 
 import com.github.dolly0526.jessicarpc.core.server.RequestHandler;
 import com.github.dolly0526.jessicarpc.core.server.RequestHandlerRegistry;
@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 @ChannelHandler.Sharable
 public class RequestInvocation extends SimpleChannelInboundHandler<Command> {
 
-    // 存放所有在途请求，初始化时传入
+    // 存放所有请求处理器，初始化时传入
     private final RequestHandlerRegistry requestHandlerRegistry;
 
 

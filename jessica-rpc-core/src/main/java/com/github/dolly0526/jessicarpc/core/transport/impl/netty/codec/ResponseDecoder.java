@@ -1,4 +1,4 @@
-package com.github.dolly0526.jessicarpc.core.transport.netty.codec;
+package com.github.dolly0526.jessicarpc.core.transport.impl.netty.codec;
 
 import com.github.dolly0526.jessicarpc.common.constant.JessicaRpcConst;
 import com.github.dolly0526.jessicarpc.core.transport.protocol.Header;

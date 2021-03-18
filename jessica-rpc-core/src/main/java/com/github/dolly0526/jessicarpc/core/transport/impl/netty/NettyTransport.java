@@ -1,4 +1,4 @@
-package com.github.dolly0526.jessicarpc.core.transport.netty;
+package com.github.dolly0526.jessicarpc.core.transport.impl.netty;
 
 import com.github.dolly0526.jessicarpc.core.client.dispatcher.ResponseFuture;
 import com.github.dolly0526.jessicarpc.core.client.dispatcher.ResponsePendingCenter;
@@ -41,7 +41,7 @@ public class NettyTransport implements Transport {
 
         // 此处处理异常必须尽量完善！
         try {
-            // 将在途请求放到requestPendingCenter中
+            // 将在途请求放到requestPendingCenter中；此处只管发，不管收
             responsePendingCenter.put(new ResponseFuture(requestId, completableFuture));
 
             // 发送命令并且立即写出，同时需要添加一个监听器来监控该次请求是否报错

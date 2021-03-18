@@ -1,1 +1,1 @@
-com.github.dolly0526.jessicarpc.core.server.RpcRequestHandler
+com.github.dolly0526.jessicarpc.core.server.impl.RpcRequestHandler

@@ -1,11 +1,11 @@
-package com.github.dolly0526.jessicarpc.core.transport.netty;
+package com.github.dolly0526.jessicarpc.core.transport.impl.netty;
 
 import com.github.dolly0526.jessicarpc.common.annotation.Singleton;
 import com.github.dolly0526.jessicarpc.core.server.RequestHandlerRegistry;
 import com.github.dolly0526.jessicarpc.core.transport.TransportServer;
-import com.github.dolly0526.jessicarpc.core.transport.netty.codec.RequestDecoder;
-import com.github.dolly0526.jessicarpc.core.transport.netty.codec.ResponseEncoder;
-import com.github.dolly0526.jessicarpc.core.transport.netty.handler.RequestInvocation;
+import com.github.dolly0526.jessicarpc.core.transport.impl.netty.codec.RequestDecoder;
+import com.github.dolly0526.jessicarpc.core.transport.impl.netty.handler.RequestInvocation;
+import com.github.dolly0526.jessicarpc.core.transport.impl.netty.codec.ResponseEncoder;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.channel.*;
@@ -14,7 +14,10 @@ import io.netty.channel.epoll.EpollEventLoopGroup;
 import io.netty.channel.epoll.EpollServerSocketChannel;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.timeout.IdleStateHandler;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * 基于netty实现服务端
@@ -37,7 +40,7 @@ public class NettyServer implements TransportServer {
 
     // spi加载的时候调用无参构造器，初始化requestHandlerRegistry
     public NettyServer() {
-        this.requestHandlerRegistry = RequestHandlerRegistry.getInstance();
+        requestHandlerRegistry = RequestHandlerRegistry.getInstance();
     }
 
 
@@ -73,13 +76,15 @@ public class NettyServer implements TransportServer {
     }
 
     /**
-     * 初始化pipeline，一对编解码handler，以及一个业务处理handler；此处已经处理了粘包半包
+     * 初始化服务端pipeline，一对编解码handler，以及一个业务处理handler；此处已经处理了粘包半包
      */
     private ChannelHandler newChannelHandlerPipeline() {
         return new ChannelInitializer<Channel>() {
             @Override
             protected void initChannel(Channel channel) {
                 channel.pipeline()
+                        // 服务端开启10s读取的idle检测
+                        .addLast(new IdleStateHandler(10, 0, 90, TimeUnit.SECONDS))
                         .addLast(new RequestDecoder())
                         .addLast(new ResponseEncoder())
                         .addLast(new RequestInvocation(requestHandlerRegistry));
@@ -97,9 +102,14 @@ public class NettyServer implements TransportServer {
         serverBootstrap.channel(Epoll.isAvailable() ? EpollServerSocketChannel.class : NioServerSocketChannel.class)
                 .group(acceptEventGroup, ioEventGroup)
                 .childHandler(channelHandler)
+                // ByteBufAllocator.DEFAULT：大多池化、堆外
                 .childOption(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT)
                 // 开启长链接模式，增加连接复用能力
-                .childOption(ChannelOption.SO_KEEPALIVE, true);
+                .childOption(ChannelOption.SO_KEEPALIVE, true)
+                // 最大的等待连接数量
+                .childOption(ChannelOption.SO_BACKLOG, 128)
+                // 不启用Nagle算法，影响发送小报文
+                .childOption(ChannelOption.TCP_NODELAY, false);
 
         return serverBootstrap;
     }

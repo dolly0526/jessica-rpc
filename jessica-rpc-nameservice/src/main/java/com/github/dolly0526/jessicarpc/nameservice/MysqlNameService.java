@@ -64,11 +64,6 @@ public class MysqlNameService implements NameService {
             sql = "INSERT INTO vvms.t_name_service (service_name, uri) VALUES (?, ?)";
             jdbcTemplate.update(sql, serviceName, uriStr);
             log.info("新增服务: {}, URI: {}...", serviceName, uriStr);
-
-        } else {
-            sql = "UPDATE vvms.t_name_service SET status = 1 WHERE service_name = ? AND uri = ?";
-            jdbcTemplate.update(sql, serviceName, uriStr);
-            log.info("重启服务: {}, URI: {}...", serviceName, uriStr);
         }
     }
 
@@ -76,7 +71,7 @@ public class MysqlNameService implements NameService {
     public URI lookupService(String serviceName) throws IOException {
 
         // 查询所有服务
-        String sql = "SELECT * FROM vvms.t_name_service WHERE service_name = ? AND status = 1";
+        String sql = "SELECT * FROM vvms.t_name_service WHERE service_name = ?";
         List<Map<String, Object>> services = jdbcTemplate.queryForList(sql, serviceName);
 
         // 获取某个服务
@@ -84,12 +79,7 @@ public class MysqlNameService implements NameService {
             services.forEach(service -> add(URI.create(String.valueOf(service.get("uri")))));
         }};
 
-        // 此处实现负载均衡；如果不存在，需要返回null
-        if (!services.isEmpty()) {
-            return LoadBalanceSupport.route(uri);
-
-        } else {
-            return null;
-        }
+        // 此处实现负载均衡
+        return LoadBalanceSupport.route(uri);
     }
 }

@@ -1,4 +1,4 @@
-package com.github.dolly0526.jessicarpc.core.transport.netty.codec;
+package com.github.dolly0526.jessicarpc.core.transport.impl.netty.codec;
 
 import com.github.dolly0526.jessicarpc.common.constant.JessicaRpcConst;
 import com.github.dolly0526.jessicarpc.core.transport.protocol.Command;
@@ -26,7 +26,7 @@ public abstract class CommandDecoder extends ByteToMessageDecoder {
         // 对当前byteBuf的index进行存档，处理粘包半包问题
         byteBuf.markReaderIndex();
 
-        // 此处先读出一个int，此为消息长度，注意需要长度减去固定的4
+        // 此处先读出一个int，为消息长度，注意需要长度减去固定的4
         int length = byteBuf.readInt() - JessicaRpcConst.DEFAULT_LENGTH_FIELD;
 
         // 如果当前长度不满足一个包，则先重置索引后返回，后续长度满足了再处理
