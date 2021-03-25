@@ -1,6 +1,6 @@
 package com.github.dolly0526.jessicarpc.common.support;
 
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.LongAdder;
 
 /**
  * 用于生成请求id
@@ -10,11 +10,17 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class RequestIdSupport {
 
-    // TODO 换成AtomicLong否则最大值太小
-    private final static AtomicInteger nextRequestId = new AtomicInteger(0);
+    // 比AtomicLong性能更好
+    private final static LongAdder nextRequestId = new LongAdder();
 
 
+    // TODO 换成long型返回值，否则最大值太小
     public static int next() {
-        return nextRequestId.getAndIncrement();
+        try {
+            return nextRequestId.intValue();
+
+        } finally {
+            nextRequestId.increment();
+        }
     }
 }
