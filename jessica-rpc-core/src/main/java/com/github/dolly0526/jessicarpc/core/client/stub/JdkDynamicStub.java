@@ -1,5 +1,6 @@
 package com.github.dolly0526.jessicarpc.core.client.stub;
 
+import co.paralleluniverse.fibers.SuspendExecution;
 import com.github.dolly0526.jessicarpc.common.model.RpcRequest;
 import com.github.dolly0526.jessicarpc.serializer.SerializeSupport;
 
@@ -22,7 +23,7 @@ public class JdkDynamicStub<T> extends AbstractServiceStub implements Invocation
 
 
     @Override
-    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable, SuspendExecution {
 
         // 构造request请求对象
         RpcRequest rpcRequest = new RpcRequest(

@@ -33,6 +33,7 @@
         <zookeeper.version>3.4.6</zookeeper.version>
         <hutool.version>5.5.9</hutool.version>
         <javatuples.version>1.2</javatuples.version>
+        <quasar.version>0.7.10</quasar.version>
     </properties>
 
     <dependencyManagement>
@@ -90,12 +91,37 @@
                 <artifactId>javatuples</artifactId>
                 <version>${javatuples.version}</version>
             </dependency>
+            <dependency>
+                <groupId>co.paralleluniverse</groupId>
+                <artifactId>quasar-core</artifactId>
+                <version>${quasar.version}</version>
+                <classifier>jdk8</classifier>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
     <build>
         <pluginManagement>
             <plugins>
+                <!-- 协程框架quasar修改指令 -->
+                <plugin>
+                    <groupId>com.vlkan</groupId>
+                    <artifactId>quasar-maven-plugin</artifactId>
+                    <version>0.7.9</version>
+                    <configuration>
+                        <check>true</check>
+                        <debug>true</debug>
+                        <verbose>true</verbose>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>instrument</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>

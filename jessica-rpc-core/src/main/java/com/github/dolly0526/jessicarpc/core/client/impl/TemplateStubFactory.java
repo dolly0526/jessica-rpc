@@ -16,25 +16,26 @@ import java.util.Map;
  */
 @Singleton
 public class TemplateStubFactory implements StubFactory {
-    private final static String STUB_SOURCE_TEMPLATE =
-            "package com.github.dolly0526.jessicarpc.client.stub;\n" +
-            "import com.github.dolly0526.jessicarpc.common.model.RpcRequest;\n" +
-            "import com.github.dolly0526.jessicarpc.serializer.SerializeSupport;\n" +
-            "\n" +
-            "public class %s extends AbstractServiceStub implements %s {\n" +
-            "    @Override\n" +
-            "    public String %s(String arg) {\n" +
-            "        return SerializeSupport.parse(\n" +
-            "                invokeRemote(\n" +
-            "                        new RpcRequest(\n" +
-            "                                \"%s\",\n" +
-            "                                \"%s\",\n" +
-            "                                SerializeSupport.serialize(arg)\n" +
-            "                        )\n" +
-            "                )\n" +
-            "        );\n" +
-            "    }\n" +
-            "}";
+    private final static String STUB_SOURCE_TEMPLATE
+            = "package com.github.dolly0526.jessicarpc.client.stub;\n"
+            + "import com.github.dolly0526.jessicarpc.common.model.RpcRequest;\n"
+            + "import com.github.dolly0526.jessicarpc.serializer.SerializeSupport;\n"
+            + "import com.github.dolly0526.jessicarpc.core.client.stub.AbstractServiceStub;\n"
+            + "\n"
+            + "public class %s extends AbstractServiceStub implements %s {\n"
+            + "    @Override\n"
+            + "    public String %s(String arg) {\n"
+            + "        return SerializeSupport.parse(\n"
+            + "                invokeRemote(\n"
+            + "                        new RpcRequest(\n"
+            + "                                \"%s\",\n"
+            + "                                \"%s\",\n"
+            + "                                SerializeSupport.serialize(arg)\n"
+            + "                        )\n"
+            + "                )\n"
+            + "        );\n"
+            + "    }\n"
+            + "}";
 
 
     @Override

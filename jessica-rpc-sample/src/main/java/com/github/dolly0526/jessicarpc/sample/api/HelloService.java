@@ -1,5 +1,6 @@
 package com.github.dolly0526.jessicarpc.sample.api;
 
+import co.paralleluniverse.fibers.SuspendExecution;
 import com.github.dolly0526.jessicarpc.sample.api.model.HelloRequest;
 import com.github.dolly0526.jessicarpc.sample.api.model.HelloResult;
 
@@ -9,9 +10,9 @@ import com.github.dolly0526.jessicarpc.sample.api.model.HelloResult;
  */
 public interface HelloService {
 
-    String hello(String name);
+    String hello(String name) throws SuspendExecution;
 
-    HelloResult helloMoreResult(String name, Long value);
+    HelloResult helloMoreResult(String name, Long value) throws SuspendExecution;
 
-    HelloResult helloMoreResult(HelloRequest request);
+    HelloResult helloMoreResult(HelloRequest request) throws SuspendExecution;
 }

@@ -1,5 +1,6 @@
 package com.github.dolly0526.jessicarpc.sample.client;
 
+import co.paralleluniverse.fibers.Fiber;
 import com.github.dolly0526.jessicarpc.api.NameService;
 import com.github.dolly0526.jessicarpc.api.RpcAccessPoint;
 import com.github.dolly0526.jessicarpc.common.support.ServiceSpiSupport;
@@ -18,7 +19,7 @@ import java.net.URI;
  * @create 2021/3/9 19:05
  */
 @Slf4j
-public class JessicaRpcClientDemo {
+public class JessicaRpcFiberClientDemo {
 
     public static void main(String[] args) throws Throwable {
 
@@ -36,14 +37,22 @@ public class JessicaRpcClientDemo {
             // 获取代理的stub
             HelloService helloService = rpcAccessPoint.getRemoteService(uri, HelloService.class);
 
-            String response1 = helloService.hello("Master MQ");
-            log.info("收到响应: {}.", response1);
+            new Fiber<String>(() -> {
+                String response1 = helloService.hello("Master MQ");
+                log.info("{} 收到响应: {}.", Fiber.currentFiber().getName(), response1);
+            }).start();
 
-            HelloResult response2 = helloService.helloMoreResult("Dolly", 99999L);
-            log.info("收到响应: {}.", response2);
+            new Fiber<String>(() -> {
+                HelloResult response2 = helloService.helloMoreResult("Dolly", 99999L);
+                log.info("{} 收到响应: {}.", Fiber.currentFiber().getName(), response2);
+            }).start();
 
-            HelloResult response3 = helloService.helloMoreResult(new HelloRequest(123, "123456"));
-            log.info("收到响应: {}.", response3);
+            new Fiber<String>(() -> {
+                HelloResult response3 = helloService.helloMoreResult(new HelloRequest(123, "123456"));
+                log.info("{} 收到响应: {}.", Fiber.currentFiber().getName(), response3);
+            }).start();
+
+            Thread.sleep(100);
         }
     }
 }

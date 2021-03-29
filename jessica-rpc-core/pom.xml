@@ -27,6 +27,14 @@
         </dependency>
         <!-- COMPILER END -->
 
+        <!-- QUASAR START -->
+        <dependency>
+            <groupId>co.paralleluniverse</groupId>
+            <artifactId>quasar-core</artifactId>
+            <classifier>jdk8</classifier>
+        </dependency>
+        <!-- QUASAR END -->
+
         <!-- JESSICA RPC START -->
         <dependency>
             <groupId>com.github.dolly0526</groupId>
@@ -63,6 +71,10 @@
             </resource>
         </resources>
         <plugins>
+            <plugin>
+                <groupId>com.vlkan</groupId>
+                <artifactId>quasar-maven-plugin</artifactId>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

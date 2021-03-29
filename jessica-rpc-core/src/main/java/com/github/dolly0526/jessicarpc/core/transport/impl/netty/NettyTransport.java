@@ -33,10 +33,10 @@ public class NettyTransport implements Transport {
     @Override
     public CompletableFuture<Command> send(Command request) {
 
-        // 构建返回值
+        // 构建future返回对象
         CompletableFuture<Command> completableFuture = new CompletableFuture<>();
 
-        // 本机唯一的requestId
+        // 当前jvm唯一的请求id
         int requestId = request.getHeader().getRequestId();
 
         // 此处处理异常必须尽量完善！
