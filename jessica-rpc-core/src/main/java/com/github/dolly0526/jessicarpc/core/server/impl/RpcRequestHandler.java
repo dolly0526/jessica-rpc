@@ -17,6 +17,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 服务端处理请求的handler
+ *
  * @author yusenyang
  * @create 2021/3/9 17:50
  */
@@ -24,7 +26,7 @@ import java.util.Map;
 @Singleton
 public class RpcRequestHandler implements RequestHandler, ServiceProviderRegistry {
 
-    // 获取所有的服务提供方 <接口类名, 实现类实例>
+    // 获取本地所有的服务提供方 <接口类名, 实现类实例>
     private Map<String/*service name*/, Object/*service provider*/> serviceProviders = new HashMap<>();
 
 
@@ -52,7 +54,7 @@ public class RpcRequestHandler implements RequestHandler, ServiceProviderRegistr
                 }
 
                 Method method = serviceProvider.getClass().getMethod(rpcRequest.getMethodName(), paraTypes);
-                Object result =  method.invoke(serviceProvider, arg);
+                Object result = method.invoke(serviceProvider, arg);
 
                 // 构造响应头部
                 ResponseHeader responseHeader = new ResponseHeader(type(), header.getVersion(), header.getRequestId());

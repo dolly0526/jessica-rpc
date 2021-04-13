@@ -25,6 +25,7 @@ public abstract class CommandEncoder extends MessageToByteEncoder<Object> {
         // 校验类型通过，继续处理
         Command command = (Command) o;
 
+        // TODO 增加一个魔术位
         // 在消息头部写出长度，多加一个4后续要减去，防止消息长度为0
         byteBuf.writeInt(JessicaRpcConst.DEFAULT_LENGTH_FIELD + command.getHeader().length() + command.getPayload().length);
 
